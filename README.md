@@ -446,3 +446,36 @@ README-ul va fi actualizat în continuare după:
 
 ### 4. Mesajele afișate în consola containerului
 ![docker logs](docs/imagini/docker_logs.png)
+
+---
+
+## Rezultate Jenkins
+
+Jenkins a fost configurat pentru rularea automată a pipeline-ului definit în fișierul `Jenkinsfile`.
+
+Pipeline-ul executat în Jenkins a conținut următoarele etape:
+- Build
+- Install dependencies
+- Test
+- Deployment
+
+În cadrul rulării pipeline-ului:
+- repository-ul a fost preluat din GitHub
+- branch-ul folosit a fost `dev_ruxandra_apostol`
+- dependențele necesare au fost instalate
+- testele automate au fost rulate cu succes
+
+### Rezultat obținut în Jenkins
+Rezultatul final al build-ului a fost:
+- `SUCCESS`
+
+La etapa de testare s-a obținut:
+- `7 passed`
+
+### Capturi Jenkins
+
+#### 1. Build reușit în Jenkins
+![jenkins build success](docs/imagini/jenkins_build_success.png)
+
+#### 2. Console Output cu testele trecute
+![jenkins console output](docs/imagini/jenkins_console_output.png)
