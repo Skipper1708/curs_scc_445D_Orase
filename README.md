@@ -430,3 +430,19 @@ README-ul va fi actualizat în continuare după:
 - realizarea Pull Request-ului
 - obținerea review-ului
 - integrarea în branch-urile necesare
+
+---
+
+## Capturi de ecran realizate
+
+### 1. Imaginea Docker creată
+![docker images](docs/imagini/docker_images.png)
+
+### 2. Containerul creat pe baza imaginii
+![docker ps -a](docs/imagini/docker_ps_a.png)
+
+### 3. Browserul care accesează aplicația rulată în container
+![browser aplicatie](docs/imagini/browser_reykjavik.png)
+
+### 4. Mesajele afișate în consola containerului
+![docker logs](docs/imagini/docker_logs.png)
