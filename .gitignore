@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# exceptii proiect SCC
+!app/
+!app/__init__.py
+!app/lib/
+!app/lib/__init__.py
+!app/lib/biblioteca_orase.py
+!app/tests/
+!app/tests/test_orase.py
