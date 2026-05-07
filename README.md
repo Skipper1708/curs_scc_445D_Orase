@@ -74,11 +74,6 @@ Scopul implementării actuale a fost:
 - commit și push în branch-ul personal de dezvoltare
 
 Nu sunt încă finalizate:
-- adăugarea `Jenkinsfile`
-- rularea testelor în Jenkins
-- adăugarea `Dockerfile`
-- rularea aplicației în container
-- realizarea capturilor de ecran pentru partea de containerizare
 - crearea Pull Request-ului spre `main_ruxandra_apostol`
 - obținerea unui review de la un coleg
 - integrarea README-ului în `main`
@@ -303,49 +298,57 @@ Până în acest moment:
 ---
 
 ## Jenkins
-În acest moment, Jenkins **nu este încă configurat** pentru această funcționalitate.
+Jenkins a fost configurat pentru rularea automată a pipeline-ului definit în fișierul `Jenkinsfile`.
 
-Urmează să fie adăugat un fișier `Jenkinsfile` în branch-ul personal de dezvoltare.
+Pipeline-ul executat în Jenkins a conținut următoarele etape:
+- Build
+- Install dependencies
+- Test
+- Deployment
 
-Acesta va trebui să includă:
-- etapă de build
-- etapă sau etape de testare
-- etapă de deployment
+Rezultate obținute în Jenkins:
+- build finalizat cu `SUCCESS`
+- testele automate au trecut cu `7 passed`
 
-După configurarea Jenkins, această secțiune va fi actualizată cu:
-- conținutul pipeline-ului
-- pașii de rulare
-- rezultatele obținute
-- statusul testelor
-- eventuale capturi de ecran
+În Jenkins:
+- repository-ul a fost preluat din GitHub
+- branch-ul folosit a fost `dev_ruxandra_apostol`
+- dependențele necesare au fost instalate automat
+- testele au fost executate cu succes
 
----
+### Capturi Jenkins
+
+#### 1. Build reușit în Jenkins
+![jenkins build success](docs/imagini/jenkins_build_success.png)
+
+#### 2. Console Output cu testele trecute
+![jenkins console output](docs/imagini/jenkins_console_output.png)
 
 ## Containerizare Docker
-În acest moment, containerizarea **nu este încă realizată**.
+Containerizarea aplicației a fost realizată prin adăugarea fișierului `Dockerfile`.
 
-Urmează să fie adăugat un fișier `Dockerfile` pentru rularea aplicației într-un container.
+Au fost parcurși următorii pași:
+- construirea imaginii Docker pentru aplicație
+- pornirea containerului pe portul `5000`
+- verificarea accesării aplicației din browser
+- verificarea containerului prin `docker ps -a`
+- verificarea logurilor prin `docker logs`
 
-După realizarea containerizării, în această secțiune vor fi adăugate:
-- conținutul Dockerfile-ului
-- comenzile de build
-- comenzile de rulare
-- informații despre imaginea creată
-- informații despre containerul pornit
-- verificarea funcționalității aplicației în container
+Rezultatul obținut:
+- imaginea Docker a fost creată cu succes
+- containerul a fost pornit cu succes
+- aplicația a putut fi accesată în browser din container
 
 ---
 
 ## Capturi de ecran necesare
-Conform cerințelor proiectului, în documentația branch-ului trebuie adăugate capturi de ecran pentru partea de containerizare.
-
-Acestea vor trebui să includă:
+Conform cerințelor proiectului, au fost realizate și adăugate în documentație capturile de ecran pentru:
 1. imaginea Docker creată
 2. containerul creat pe baza imaginii
 3. browserul care accesează aplicația rulată în container
-4. mesajele afișate în consola din care a fost pornit containerul
-
-În acest moment, aceste capturi nu sunt încă realizate, deoarece partea de Docker urmează să fie implementată.
+4. mesajele afișate în consola containerului
+5. build-ul reușit în Jenkins
+6. `Console Output` din Jenkins, unde se vede rezultatul testelor
 
 ---
 
@@ -385,14 +388,18 @@ Momentan nu există review-uri efectuate de mine, deci nu există încă ID-uri 
 - [x] testare manuală locală
 - [x] commit și push în branch-ul personal de dezvoltare
 - [x] documentare pe branch-ul de dezvoltare
+- [x] Jenkinsfile
+- [x] rulare pipeline Jenkins
+- [x] build Jenkins cu `SUCCESS`
+- [x] teste trecute în Jenkins (`7 passed`)
+- [x] Dockerfile
+- [x] build imagine Docker
+- [x] pornire container Docker
+- [x] accesare aplicație din container
+- [x] capturi de ecran pentru containerizare
+- [x] capturi de ecran pentru Jenkins
 
 ### Nerealizat încă
-- [ ] Jenkinsfile
-- [ ] rulare pipeline Jenkins
-- [ ] Dockerfile
-- [ ] build imagine Docker
-- [ ] pornire container Docker
-- [ ] capturi de ecran pentru containerizare
 - [ ] Pull Request din `dev_ruxandra_apostol` în `main_ruxandra_apostol`
 - [ ] review de la un coleg
 - [ ] integrare README în `main`
@@ -401,15 +408,10 @@ Momentan nu există review-uri efectuate de mine, deci nu există încă ID-uri 
 
 ## Ce mai este de făcut
 Pașii rămași pentru finalizarea completă a proiectului sunt:
-1. adăugarea fișierului `Dockerfile`
-2. adăugarea fișierului `Jenkinsfile`
-3. configurarea și rularea testelor în Jenkins
-4. rularea aplicației în container Docker
-5. realizarea capturilor de ecran cerute
-6. crearea Pull Request-ului din `dev_ruxandra_apostol` în `main_ruxandra_apostol`
-7. obținerea unui review de la cel puțin un coleg
-8. integrarea README-ului în branch-ul `main`
-9. completarea finală a documentației după Jenkins și Docker
+1. crearea Pull Request-ului din `dev_ruxandra_apostol` în `main_ruxandra_apostol`
+2. obținerea unui review de la cel puțin un coleg
+3. integrarea README-ului în branch-ul `main`
+4. actualizarea finală a documentației după PR și review
 
 ---
 
@@ -425,8 +427,6 @@ Implementarea actuală respectă ideile principale cerute:
 - documentare pe GitHub
 
 README-ul va fi actualizat în continuare după:
-- configurarea Jenkins
-- containerizare
 - realizarea Pull Request-ului
 - obținerea review-ului
 - integrarea în branch-urile necesare
@@ -448,34 +448,3 @@ README-ul va fi actualizat în continuare după:
 ![docker logs](docs/imagini/docker_logs.png)
 
 ---
-
-## Rezultate Jenkins
-
-Jenkins a fost configurat pentru rularea automată a pipeline-ului definit în fișierul `Jenkinsfile`.
-
-Pipeline-ul executat în Jenkins a conținut următoarele etape:
-- Build
-- Install dependencies
-- Test
-- Deployment
-
-În cadrul rulării pipeline-ului:
-- repository-ul a fost preluat din GitHub
-- branch-ul folosit a fost `dev_ruxandra_apostol`
-- dependențele necesare au fost instalate
-- testele automate au fost rulate cu succes
-
-### Rezultat obținut în Jenkins
-Rezultatul final al build-ului a fost:
-- `SUCCESS`
-
-La etapa de testare s-a obținut:
-- `7 passed`
-
-### Capturi Jenkins
-
-#### 1. Build reușit în Jenkins
-![jenkins build success](docs/imagini/jenkins_build_success.png)
-
-#### 2. Console Output cu testele trecute
-![jenkins console output](docs/imagini/jenkins_console_output.png)
