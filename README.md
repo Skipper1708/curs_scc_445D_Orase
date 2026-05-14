@@ -1,10 +1,4 @@
-# Proiect SCC - Orase
-
-## Dezvoltator
-Szabo Daria Ioana
-
-## Element ales
-Paris
+# Orasul Paris — Szabo Daria Ioana
 
 ## Functionalitate adaugata
 Am adaugat functionalitate pentru orasul Paris in cadrul temei Orase.
@@ -17,6 +11,7 @@ Fisiere adaugate/modificate:
 - requirement.txt - dependentele aplicatiei
 - Dockerfile - containerizarea aplicatiei
 - Jenkinsfile - pipeline declarativ pentru rularea testelor
+- screenshots/ - imagini folosite pentru documentarea testarii
 
 ## Rute adaugate
 - / - pagina principala a aplicatiei
@@ -34,9 +29,11 @@ Fisiere adaugate/modificate:
 - [x] Testare manuala realizata
 - [x] Testare Docker realizata
 - [x] Testare Jenkins realizata
+- [x] Screenshot-uri adaugate in README
 
 ## Testare manuala
 Aplicatia a fost pornita local folosind comanda:
+
 python3 -m flask --app orase.py run --host=0.0.0.0
 
 Au fost accesate urmatoarele rute in browser:
@@ -46,9 +43,7 @@ Au fost accesate urmatoarele rute in browser:
 - http://127.0.0.1:5000/orase/paris/descriere
 - http://127.0.0.1:5000/orase/paris/obiective
 
-Rezultat: toate rutele au functionat corect si au returnat raspuns HTTP 200.
-
-Screenshot-uri testare manuala:
+Rezultat: rutele au functionat corect si au returnat raspuns HTTP 200.
 
 Descriere Paris:
 
@@ -60,14 +55,18 @@ Obiective Paris:
 
 ## Teste unitare
 Testele au fost rulate local cu:
+
 PYTHONPATH=. python3 -m unittest discover -s app/test
 
 Rezultat:
+
 Ran 2 tests in 0.000s
+
 OK
 
 ## Testare cu Jenkins
 A fost creat un job Jenkins de tip Pipeline:
+
 orase-paris-szabo-daria
 
 Configurare Jenkins:
@@ -80,8 +79,11 @@ Pipeline-ul are doua etape:
 - Run tests
 
 Rezultat final Jenkins:
+
 Ran 2 tests in 0.000s
+
 OK
+
 Finished: SUCCESS
 
 Screenshot Jenkins:
@@ -90,43 +92,34 @@ Screenshot Jenkins:
 
 ## Containerizare Docker
 Imaginea Docker a fost construita cu:
+
 sudo docker build -t orase-paris-app .
 
 Containerul a fost pornit cu:
+
 sudo docker run -d -p 5000:5000 --name orase-paris-container orase-paris-app
 
 Verificare imagine:
+
 sudo docker images
-
-Verificare container:
-sudo docker ps
-
-Verificare log-uri container:
-sudo docker logs orase-paris-container
-
-Rute verificate din container:
-- http://127.0.0.1:5000/orase/paris/descriere
-- http://127.0.0.1:5000/orase/paris/obiective
-
-Screenshot-uri containerizare:
-
-Docker images:
 
 ![Docker images](screenshots/docker-images.jpeg)
 
-Docker ps:
+Verificare container:
+
+sudo docker ps
 
 ![Docker ps](screenshots/docker-ps.jpeg)
 
-Browser - descriere Paris:
+Verificare aplicatie in browser din container:
 
 ![Descriere Paris](screenshots/paris-descriere.jpeg)
 
-Browser - obiective Paris:
-
 ![Obiective Paris](screenshots/paris-obiective.jpeg)
 
-Docker logs:
+Verificare log-uri container:
+
+sudo docker logs orase-paris-container
 
 ![Docker logs](screenshots/docker-logs.jpeg)
 
@@ -148,9 +141,11 @@ git push
 
 ## Integrare
 Branch de dezvoltare:
+
 dev_Szabo_Daria
 
 Branch principal personal:
+
 main_Szabo_Daria
 
 Pull Request:
@@ -158,8 +153,8 @@ Pull Request:
 - Destination: main_Szabo_Daria
 - Status: urmeaza sa fie creat / in asteptare review
 
-## Pull Request-uri la care am facut review
-- PR #<id> - <descriere>
+## Review Pull Request
+Urmeaza sa fie completat dupa realizarea review-ului la PR-ul unui coleg.
 
 ## Ce mai este de facut
 - Creare Pull Request din dev_Szabo_Daria in main_Szabo_Daria
