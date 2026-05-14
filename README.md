@@ -49,11 +49,14 @@ Au fost accesate urmatoarele rute in browser:
 Rezultat: toate rutele au functionat corect si au returnat raspuns HTTP 200.
 
 Screenshot-uri testare manuala:
-- screenshot pagina principala
-- screenshot /orase
-- screenshot /orase/paris
-- screenshot /orase/paris/descriere
-- screenshot /orase/paris/obiective
+
+Descriere Paris:
+
+![Descriere Paris](screenshots/paris-descriere.jpeg)
+
+Obiective Paris:
+
+![Obiective Paris](screenshots/paris-obiective.jpeg)
 
 ## Teste unitare
 Testele au fost rulate local cu:
@@ -82,8 +85,8 @@ OK
 Finished: SUCCESS
 
 Screenshot Jenkins:
-- screenshot cu Console Output unde apare Finished: SUCCESS
-- screenshot cu build-ul #4 reusit
+
+![Jenkins Success](screenshots/jenkins-success.jpeg)
 
 ## Containerizare Docker
 Imaginea Docker a fost construita cu:
@@ -106,11 +109,26 @@ Rute verificate din container:
 - http://127.0.0.1:5000/orase/paris/obiective
 
 Screenshot-uri containerizare:
-- screenshot cu sudo docker images
-- screenshot cu sudo docker ps
-- screenshot browser cu /orase/paris/descriere
-- screenshot browser cu /orase/paris/obiective
-- screenshot cu sudo docker logs orase-paris-container
+
+Docker images:
+
+![Docker images](screenshots/docker-images.jpeg)
+
+Docker ps:
+
+![Docker ps](screenshots/docker-ps.jpeg)
+
+Browser - descriere Paris:
+
+![Descriere Paris](screenshots/paris-descriere.jpeg)
+
+Browser - obiective Paris:
+
+![Obiective Paris](screenshots/paris-obiective.jpeg)
+
+Docker logs:
+
+![Docker logs](screenshots/docker-logs.jpeg)
 
 ## Probleme intampinate si rezolvare
 1. Jenkins nu recunostea agent dockerfile.
