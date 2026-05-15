@@ -21,7 +21,7 @@ pipeline {
                 sh '''
                     .venv/bin/pylint --exit-zero app/lib/biblioteca_orase.py
                     .venv/bin/pylint --exit-zero orase.py
-                    PYTHONPATH=. .venv/bin/pytest
+                    PYTHONPATH=$WORKSPACE:$WORKSPACE/app/lib .venv/bin/pytest
                 '''
             }
         }
