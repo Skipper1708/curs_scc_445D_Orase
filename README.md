@@ -62,7 +62,7 @@ curs_scc_445D_Orase/
 ## Screenshots
 
 ### Aplicatia principala
-![Aplicatie](screenshots/"aplicatie'.png")
+![Aplicatie](screenshots/aplicatie.png)
 
 ### Pagina Orase
 ![Orase](screenshots/orase.png)
