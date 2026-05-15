@@ -9,6 +9,9 @@ pipeline {
                 sh '''
                     pwd
                     ls -l
+                    ls -l app
+                    ls -l app/lib
+                    ls -l app/teste
                     python3 -m venv .venv
                     .venv/bin/pip install -r quickrequirements.txt
                 '''
