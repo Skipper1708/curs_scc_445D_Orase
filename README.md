@@ -40,7 +40,24 @@ In cadrul temei de grupa Orase, am ales sa implementez functionalitatea pentru o
 - **Biblioteca specifica temei:** app/lib/biblioteca_orase.py
 
 ## Structura proiectului
-![Structura proiectului](screenshots/structura.png)
+
+```text
+curs_scc_445D_Orase/
+│
+├── app/
+│   ├── lib/
+│   │   └── biblioteca_orase.py
+│   │
+│   └── teste/
+│       └── test_lisabona.py
+│
+├── screenshots/
+├── Dockerfile
+├── Jenkinsfile
+├── pytest.ini
+├── quickrequirements.txt
+├── orase.py
+└── README.md
 
 ## Screenshots
 
