@@ -45,7 +45,7 @@ In cadrul temei de grupa Orase, am ales sa implementez functionalitatea pentru o
 ## Screenshots
 
 ### Aplicatia principala
-![Aplicatie](screenshots/aplicatie.png)
+![Aplicatie](screenshots/"aplicatie'.png")
 
 ### Pagina Orase
 ![Orase](screenshots/orase.png)
