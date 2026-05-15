@@ -58,7 +58,7 @@ curs_scc_445D_Orase/
 ├── quickrequirements.txt
 ├── orase.py
 └── README.md
-
+```
 ## Screenshots
 
 ### Aplicatia principala
