@@ -2,7 +2,7 @@ import os
 import importlib.util
 
 cale_biblioteca = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../lib/biblioteca_orase.py")
+    os.path.join(os.path.dirname(__file__), "..", "lib", "biblioteca_orase.py")
 )
 
 spec = importlib.util.spec_from_file_location("biblioteca_orase", cale_biblioteca)
