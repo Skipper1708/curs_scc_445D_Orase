@@ -1,9 +1,16 @@
-import sys
 import os
+import importlib.util
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib')))
+cale_biblioteca = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../lib/biblioteca_orase.py")
+)
 
-from biblioteca_orase import get_populatie_lisabona, get_descriere_lisabona
+spec = importlib.util.spec_from_file_location("biblioteca_orase", cale_biblioteca)
+biblioteca_orase = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(biblioteca_orase)
+
+get_populatie_lisabona = biblioteca_orase.get_populatie_lisabona
+get_descriere_lisabona = biblioteca_orase.get_descriere_lisabona
 
 def test_populatie_tip():
     rezultat = get_populatie_lisabona()
