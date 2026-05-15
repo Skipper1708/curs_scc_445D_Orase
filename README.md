@@ -333,73 +333,54 @@ Fluxul urmat:
 <a id="probleme-intampinate-si-rezolvare"></a>
 ## 12. Probleme intampinate si rezolvare
 
-### 1. Autentificare GitHub
+Pe parcursul implementarii au aparut cateva probleme legate de integrarea aplicatiei cu GitHub, Docker si Jenkins. Acestea au fost identificate si rezolvate astfel:
 
-Problemă: GitHub nu a acceptat parola normala la `git push`.
+### 1. Autentificarea GitHub prin terminal
 
-Cauza: GitHub foloseste Personal Access Token pentru autentificarea prin terminal.
-
-Rezolvare: a fost generat un Personal Access Token cu permisiunea `repo` si a fost folosit in locul parolei.
-
----
-
-### 2. Permisiune Docker local
-
-Problemă: comenzile Docker nu au putut fi rulate fara `sudo`.
-
-Cauza: utilizatorul local nu avea permisiune sa acceseze Docker daemon.
-
-Rezolvare: comenzile Docker au fost rulate cu `sudo`.
+GitHub nu a acceptat parola contului pentru operatii Git prin HTTPS.  
+Pentru rezolvare, am folosit un Personal Access Token cu permisiunea `repo`, introdus in locul parolei la comanda `git push`.
 
 ---
 
-### 3. Jenkins nu recunostea agentul Docker
+### 2. Permisiuni Docker pe masina locala
 
-Problemă: build-ul Jenkins a esuat deoarece Jenkins nu recunostea `agent dockerfile`.
-
-Cauza: lipsea plugin-ul Docker Pipeline.
-
-Rezolvare: a fost instalat plugin-ul Docker Pipeline din Jenkins.
+Comenzile Docker nu puteau fi rulate direct de utilizatorul curent.  
+Pentru rezolvare, am rulat comenzile Docker cu `sudo`, astfel incat sa pot construi imaginea si sa pornesc containerul aplicatiei.
 
 ---
 
-### 4. Jenkins nu avea permisiune sa foloseasca Docker
+### 3. Plugin Docker Pipeline in Jenkins
 
-Problemă: Jenkins nu putea accesa Docker daemon.
+La prima rulare, Jenkins nu recunostea configuratia `agent dockerfile` din `Jenkinsfile`.  
+Cauza a fost lipsa plugin-ului Docker Pipeline.
 
-Cauza: utilizatorul `jenkins` nu era in grupul `docker`.
-
-Rezolvare: utilizatorul `jenkins` a fost adaugat in grupul `docker`, apoi serviciul Jenkins a fost repornit.
-
----
-
-### 5. Jenkins nu gasea modulul `app.lib`
-
-Problemă: testele rulau local, dar esuau in Jenkins cu eroarea `No module named app.lib`.
-
-Cauza: folderul `app/lib` era ignorat de `.gitignore`, deoarece exista o regula pentru `lib`.
-
-Rezolvare: fisierele din `app/lib` au fost adaugate fortat in Git, apoi s-a facut commit si push.
+Dupa instalarea plugin-ului Docker Pipeline, Jenkins a putut interpreta corect `Jenkinsfile` si a putut construi imaginea Docker.
 
 ---
 
-### 6. Docker rula o versiune veche a aplicatiei
+### 4. Acces Docker pentru Jenkins
 
-Problemă: dupa modificarea interfetei, containerul afisa in continuare varianta veche.
+Jenkins nu avea permisiune sa acceseze Docker daemon, iar build-ul a esuat in etapa de construire a imaginii Docker.
 
-Cauza: imaginea Docker nu fusese reconstruita dupa modificarea codului.
-
-Rezolvare: containerul vechi a fost sters, imaginea Docker a fost reconstruita, apoi containerul a fost pornit din nou.
+Pentru rezolvare, utilizatorul `jenkins` a fost adaugat in grupul `docker`, apoi serviciul Jenkins a fost repornit. Dupa aceasta modificare, Jenkins a putut folosi Docker in pipeline.
 
 ---
 
-### 7. Transferul capturilor de ecran in masina virtuala
+### 5. Importul modulului `app.lib` in Jenkins
 
-Problemă: Drag and Drop din Windows in Ubuntu nu a functionat in VirtualBox.
+Testele treceau local, dar esuau in Jenkins cu eroarea `No module named app.lib`.
 
-Cauza: functia Drag and Drop nu era suportata sau Guest Additions nu erau configurate complet.
+Cauza a fost faptul ca folderul `app/lib` era ignorat de `.gitignore`, deoarece exista o regula pentru `lib`.
 
-Rezolvare: a fost folosit un folder partajat VirtualBox, iar capturile au fost copiate in folderul `screenshots`.
+Pentru rezolvare, fisierele necesare din `app/lib` au fost adaugate fortat in Git, apoi s-a facut commit si push. Dupa aceea, Jenkins a putut importa corect functiile din `biblioteca_orase.py`.
+
+---
+
+### 6. Reconstruirea imaginii Docker dupa modificari
+
+Dupa modificarea interfetei, containerul afisa in continuare varianta veche a aplicatiei.
+
+Cauza a fost faptul ca imaginea Docker fusese construita inainte de modificarile noi. Pentru rezolvare, containerul vechi a fost sters, imaginea Docker a fost reconstruita, iar containerul a fost pornit din nou din imaginea actualizata.
 
 ---
 
