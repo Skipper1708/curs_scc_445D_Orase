@@ -120,7 +120,7 @@ Pipeline cu 3 stagii:
 docker build -t como-app .
 docker run -p 5000:5000 como-app
 ```
-![Jenkins pipeline](screenshots/jenkins_pipeline.png)
+![Jenkins status](screenshots/jenkins_status.png)
 
 ## Pull Request-uri si review
 | PR | Branch sursa | Branch destinatie | Reviewer | Status |
