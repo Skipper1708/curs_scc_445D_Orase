@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'python3 -m pytest app/teste/test_como.py -v'
+                sh 'cd ${WORKSPACE} && python3 -m pytest app/teste/test_como.py -v'
             }
         }
         stage('Deploy') {
