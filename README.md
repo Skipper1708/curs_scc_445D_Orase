@@ -30,6 +30,7 @@ Scopul este familiarizarea cu unelte folosite in industria software: Git/GitHub,
 - **Repository:** curs_scc_445D_Orase
 
 ## Structura proiectului
+````
 curs_scc_445D_Orase/
 ├── app/
 │   ├── init.py
@@ -45,6 +46,7 @@ curs_scc_445D_Orase/
 ├── pytest.ini
 ├── quickrequirements.txt
 └── README.md
+````
 ## Functionalitatea implementata
 Functionalitate pentru orasul **Como** (Italia):
 - `populatie_como()` - returneaza populatia orasului Como
