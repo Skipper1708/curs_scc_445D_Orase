@@ -113,6 +113,7 @@ Pipeline cu 3 stagii:
 - **Deploy** - creare si pornire container Docker
 
 ![Jenkins status](screenshots/jenkins_status.png)
+![Docker build](screenshots/docker_build.png)
 ![Jenkins pipeline](screenshots/jenkins_pipeline.png)
 
 ## Containerizare Docker
@@ -120,7 +121,7 @@ Pipeline cu 3 stagii:
 docker build -t como-app .
 docker run -p 5000:5000 como-app
 ```
-![Docker build](screenshots/docker_build.png)
+![Jenkins pipeline](screenshots/jenkins_pipeline.png)
 
 ## Pull Request-uri si review
 | PR | Branch sursa | Branch destinatie | Reviewer | Status |
