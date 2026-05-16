@@ -111,8 +111,7 @@ Pipeline cu 3 stagii:
 - **Build** - instalare dependinte
 - **Test** - rulare unit tests cu pytest
 - **Deploy** - creare si pornire container Docker
-
-![Jenkins status](screenshots/jenkins_status.png)
+- 
 ![Jenkins pipeline](screenshots/jenkins_pipeline.png)
 
 ## Containerizare Docker
