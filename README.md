@@ -113,7 +113,6 @@ Pipeline cu 3 stagii:
 - **Deploy** - creare si pornire container Docker
 
 ![Jenkins status](screenshots/jenkins_status.png)
-![Docker build](screenshots/docker_build.png)
 ![Jenkins pipeline](screenshots/jenkins_pipeline.png)
 
 ## Containerizare Docker
