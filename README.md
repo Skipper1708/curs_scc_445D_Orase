@@ -96,7 +96,7 @@ python3 -m pytest app/teste/test_como.py -v
 ## Rezultatele testarii
 Toate testele trec cu succes (PASSED).
 
-![Teste reusit](screenshots/teste_reusit.png)
+![Teste reusit](screenshots/teste_reusite.png)
 
 ## Integrare Git si GitHub
 - Branch dezvoltare: `dev_Lambru_Adina`
