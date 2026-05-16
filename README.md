@@ -112,6 +112,7 @@ Pipeline cu 3 stagii:
 - **Test** - rulare unit tests cu pytest
 - **Deploy** - creare si pornire container Docker
 
+![Jenkins status](screenshots/jenkins_status.png)
 ![Jenkins pipeline](screenshots/jenkins_pipeline.png)
 
 ## Containerizare Docker
@@ -120,7 +121,6 @@ docker build -t como-app .
 docker run -p 5000:5000 como-app
 ```
 ![Docker build](screenshots/docker_build.png)
-![Browser container](screenshots/docker_browser.png)
 
 ## Pull Request-uri si review
 | PR | Branch sursa | Branch destinatie | Reviewer | Status |
