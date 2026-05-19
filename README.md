@@ -302,30 +302,43 @@ Comenzi Git importante folosite:
 
 ## 11. Capturi de ecran
 
-Au fost realizate capturi de ecran pentru următoarele elemente:
+### 11.1 Pull Request pe GitHub
 
-- Pull Request pe GitHub;
-- reviewer adăugat la Pull Request;
-- Jenkins pipeline cu rezultat `Finished: SUCCESS`;
-- aplicația rulând în browser;
-- imaginea Docker creată;
-- containerul Docker pornit.
+Pull Request creat din branch-ul `dev_paunoiu_ianis` către branch-ul `main_paunoiu_ianis`, cu reviewer adăugat.
 
-Dovezi obținute:
+![Pull Request GitHub](screenshots/github-pull-req.png)
 
-    Finished: SUCCESS
+---
 
-Imagine Docker:
+### 11.2 Jenkins pipeline - SUCCESS
 
-    orase-paunoiu-ianis:latest
+Pipeline-ul Jenkins a rulat cu succes. În consola Jenkins se poate observa rezultatul final `Finished: SUCCESS`.
 
-Container Docker:
+![Jenkins Console Output](screenshots/console.png)
 
-    container-orase-paunoiu-ianis
+---
 
-Port expus:
+### 11.3 Aplicația rulând în browser
 
-    0.0.0.0:5011->5011/tcp
+Aplicația Flask rulează în browser pe adresa `http://192.168.64.2:5011`.
+
+![Aplicație browser](screenshots/app-ui.png)
+
+---
+
+### 11.4 Imagine Docker creată
+
+Imaginea Docker `orase-paunoiu-ianis:latest` a fost creată cu succes.
+
+![Docker images](screenshots/docker-images.png)
+
+---
+
+### 11.5 Container Docker pornit
+
+Containerul `container-orase-paunoiu-ianis` rulează și expune portul `5011`.
+
+![Docker ps](screenshots/docker-ps.png)
 
 ---
 
