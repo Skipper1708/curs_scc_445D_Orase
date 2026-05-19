@@ -370,3 +370,15 @@ Funcționalitatea individuală implementată este pentru orașul București, în
 
 Aplicația rulează local, rulează în container Docker, iar pipeline-ul Jenkins s-a executat cu succes.
 EOF
+
+## 15. Pași pentru prezentare
+
+Pentru verificare, aplicația poate fi demonstrată astfel:
+
+1. Se deschide mașina virtuală Linux.
+2. Se verifică branch-ul `dev_paunoiu_ianis`.
+3. Se rulează testele cu `pytest`.
+4. Se verifică pipeline-ul Jenkins cu rezultat `Finished: SUCCESS`.
+5. Se verifică imaginea Docker cu `docker images`.
+6. Se verifică rularea containerului cu `docker ps`.
+7. Se accesează aplicația în browser la `http://192.168.64.2:5011`.
