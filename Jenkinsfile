@@ -40,7 +40,7 @@ pipeline {
                 sh 'docker build -t orase_manchester:latest .'
                 sh 'docker stop orase_container || true'
                 sh 'docker rm orase_container || true'
-                sh 'docker run -d --name orase_container -p 5011:5011 orase_manchester:latest'
+                sh 'docker run -d --name orase_container -p 8020:5011 orase_manchester:latest'
             }
         }
     }
