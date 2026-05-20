@@ -14,6 +14,7 @@ COPY orase.py orase.py
 
 RUN python3 -m venv .venv
 RUN .venv/bin/pip install -r quickrequirements.txt
+RUN chmod +x dockerstart.sh
 
 EXPOSE 5011
 ENTRYPOINT ["./dockerstart.sh"]
