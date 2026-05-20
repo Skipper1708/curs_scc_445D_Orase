@@ -107,7 +107,7 @@ Execuția testelor se face din directorul rădăcină folosind comanda:
 
 ```bash
 (.venv) tusu@tusu-VirtualBox:~/Desktop/curs_scc_445D_Orase$ pytest app/tests/ -v
-
+```
 Testele au fost rulate local cu succes folosind pytest:
 ![image](screenshots/manchester_pytest.png)
 
