@@ -4,22 +4,37 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Build - creare mediu virtual Python'
-                sh '. ./activeaza_venv_jenkins'
+                echo 'Build - Creare mediu virtual Python si instalare dependinte'
+                // Reconstruim curat mediul virtual si instalam pachetele
+                sh '''
+                    python3 -m venv .venv
+                    .venv/bin/pip install -r quickrequirements.txt
+                '''
             }
         }
+        
         stage('Calitate Cod') {
             steps {
-                sh '. .venv/bin/activate && pylint --exit-zero app/lib/biblioteca_orase.py'
-                sh '. .venv/bin/activate && pylint --exit-zero app/tests/test_lib_orase.py'
-                sh '. .venv/bin/activate && pylint --exit-zero orase.py'
+                // Activam mediul si rulam pylint in aceeasi comanda structurata pe mai multe linii (folosind ghilimele triple)
+                sh '''
+                    . .venv/bin/activate
+                    pylint --exit-zero app/lib/biblioteca_orase.py
+                    pylint --exit-zero app/tests/test_lib_orase.py
+                    pylint --exit-zero orase.py
+                '''
             }
         }
+        
         stage('Testare') {
             steps {
-                sh '. ./activeaza_venv && pytest app/tests/ -v'
+                // Rulam pytest asigurarandu-ne ca suntem in interiorul mediului virtual activat
+                sh '''
+                    . .venv/bin/activate
+                    pytest app/tests/ -v
+                '''
             }
         }
+        
         stage('Deploy') {
             steps {
                 sh 'docker build -t orase_manchester:latest .'
