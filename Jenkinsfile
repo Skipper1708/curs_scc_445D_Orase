@@ -15,9 +15,9 @@ pipeline {
         
         stage('Calitate Cod') {
             steps {
-                // Activam mediul si rulam pylint in aceeasi comanda structurata pe mai multe linii (folosind ghilimele triple)
                 sh '''
                     . .venv/bin/activate
+                    export PYTHONPATH=.
                     pylint --exit-zero app/lib/biblioteca_orase.py
                     pylint --exit-zero app/tests/test_lib_orase.py
                     pylint --exit-zero orase.py
@@ -27,9 +27,9 @@ pipeline {
         
         stage('Testare') {
             steps {
-                // Rulam pytest asigurarandu-ne ca suntem in interiorul mediului virtual activat
                 sh '''
                     . .venv/bin/activate
+                    export PYTHONPATH=.
                     pytest app/tests/ -v
                 '''
             }
