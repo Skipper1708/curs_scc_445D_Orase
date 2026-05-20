@@ -18,8 +18,8 @@ pipeline {
                 sh '''
                     . .venv/bin/activate
                     export PYTHONPATH=.
-                    pylint --exit-zero app/lib/biblioteca_orase.py
-                    pylint --exit-zero app/tests/test_lib_orase.py
+                    pylint --exit-zero app.lib.biblioteca_orase
+                    pylint --exit-zero app.tests.test_lib_orase
                     pylint --exit-zero orase.py
                 '''
             }
