@@ -1,8 +1,8 @@
 #!/bin/bash
 #LINUX
-export FLASK_APP=tari
+export FLASK_APP=orase
 
 #WINDOWS
-#set FLASK_APP=tari
+#set FLASK_APP=orase
 
 flask run -p 5011 --reload
