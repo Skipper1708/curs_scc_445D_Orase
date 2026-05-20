@@ -130,7 +130,7 @@ def page(title, body, nav_links=""):
     {nav_links}
   </nav>
   {body}
-  <footer>Proiect SCC 445D &nbsp;&middot;&nbsp; <span>Sirbu Rares</span> &nbsp;&middot;&nbsp; Roma</footer>
+  <footer><span>Roma</span></footer>
 </body>
 </html>"""
 
@@ -139,18 +139,19 @@ def page(title, body, nav_links=""):
 def index():
     body = """
     <div class="hero">
-      <div class="flag">&#127758;</div>
-      <h1>Aplicatie Orase</h1>
-      <p>Informatii despre orase din intreaga lume</p>
-      <a href="/orase" class="btn">Exploreaza orasele &rarr;</a>
+      <div class="flag">&#127470;&#127481;</div>
+      <h1>Roma</h1>
+      <p>Orasul Etern &nbsp;&middot;&nbsp; Italia</p>
+      <a href="/roma" class="btn">Descopera Roma &rarr;</a>
     </div>
     <div class="container">
       <div class="card">
-        <h2>Despre proiect</h2>
-        <p>Aplicatie web dezvoltata in cadrul cursului <strong>Servicii Cloud si Containerizare</strong>.
-        Prezinta informatii despre orase: populatie, descriere si repere culturale.</p>
+        <h2>Despre Roma</h2>
+        <p>Roma este capitala Italiei si unul dintre cele mai vechi orase din lume, cu o istorie de peste 2700 de ani.
+        Cunoscuta ca <strong>Orasul Etern</strong>, Roma gazduieste monumente iconice precum Coloseum, Forumul Roman si Vaticanul.</p>
         <div class="btn-grid">
-          <a href="/orase" class="btn">Vezi orasele disponibile</a>
+          <a href="/roma/populatie" class="btn">Populatie</a>
+          <a href="/roma/descriere" class="btn">Descriere</a>
         </div>
       </div>
     </div>
