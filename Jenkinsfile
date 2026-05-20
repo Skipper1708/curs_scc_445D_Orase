@@ -10,8 +10,8 @@ pipeline {
         }
         stage('Calitate Cod') {
             steps {
-                sh '. .venv/bin/activate && pylint --exit-zero app/lib/*.py'
-                sh '. .venv/bin/activate && pylint --exit-zero app/tests/*.py'
+                sh '. .venv/bin/activate && pylint --exit-zero app/lib/biblioteca_orase.py'
+                sh '. .venv/bin/activate && pylint --exit-zero app/tests/test_lib_orase.py'
                 sh '. .venv/bin/activate && pylint --exit-zero orase.py'
             }
         }
