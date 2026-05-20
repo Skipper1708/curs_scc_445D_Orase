@@ -320,10 +320,12 @@ Pipeline-ul executat în Jenkins a conținut următoarele etape:
 ### Capturi Jenkins
 
 #### 1. Build reușit în Jenkins
-![jenkins build success](docs/imagini/jenkins_build_success.png)
+![jenkins build success](docs/imagini/jenkins_build_succes.png)
 
 #### 2. Console Output cu testele trecute
 ![jenkins console output](docs/imagini/jenkins_console_output.png)
+
+> **Notă:** capturile Jenkins vor fi adăugate după rularea finală a pipeline-ului.
 
 ---
 
@@ -364,14 +366,20 @@ Conform cerințelor proiectului, au fost realizate și adăugate în documentaț
 ### 1. Imaginea Docker creată
 ![docker images](docs/imagini/docker_images.png)
 
+Imaginea `orase_sarajevo:latest` a fost construită cu succes (157MB, ID: db3e40434c94).
+
 ### 2. Containerul pornit
 ![docker ps](docs/imagini/docker_ps.png)
+
+Containerul `orase_container` rulează pe portul `5011`, status `Up`.
 
 ### 3. Browserul care accesează aplicația din container
 ![browser aplicatie](docs/imagini/browser_sarajevo.png)
 
 ### 4. Logurile containerului
 ![docker logs](docs/imagini/docker_logs.png)
+
+Flask servește corect toate rutele implementate — toate returnează status `200`.
 
 ---
 
