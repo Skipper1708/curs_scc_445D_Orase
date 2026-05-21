@@ -10,8 +10,8 @@ def index():
     <ul>
         <li><a href="/orase">Orase</a></li>
         <li><a href="/viena">Viena</a></li>
-        <li><a href="/populatie_viena">Populatie Viena</a></li>
-        <li><a href="/descriere_viena">Descriere Viena</a></li>
+        <li><a href="/viena/populatie">Populatie Viena</a></li>
+        <li><a href="/viena/descriere">Descriere Viena</a></li>
     </ul>
     '''
 
@@ -21,13 +21,13 @@ def orase():
 
 @app.route('/viena')
 def viena():
-    return '<h2>Viena</h2><p>Populatie: <a href="/populatie_viena">click</a></p><p>Descriere: <a href="/descriere_viena">click</a></p>'
+    return '<h2>Viena</h2><p>Populatie: <a href="/viena/populatie">click</a></p><p>Descriere: <a href="/viena/descriere">click</a></p>'
 
-@app.route('/populatie_viena')
+@app.route('/viena/populatie')
 def populatie_viena_route():
     return f'<h2>Populatia Vienei</h2><p>{populatie_viena()}</p>'
 
-@app.route('/descriere_viena')
+@app.route('/viena/descriere')
 def descriere_viena_route():
     return f'<h2>Descrierea Vienei</h2><p>{descriere_viena()}</p>'
 
