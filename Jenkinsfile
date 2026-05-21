@@ -1,49 +1,37 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "orase_viena_urmuz_laurentiu"
-        CONTAINER_NAME = "container_viena_urmuz"
-        PORT_HOST = "8020"
-        PORT_CONTAINER = "5011"
-    }
-
     stages {
-
         stage('Build') {
             steps {
-                echo 'Building Docker image...'
-                sh "docker build -t ${IMAGE_NAME} ."
-                echo 'Build finished.'
+                echo 'Build - creare mediu virtual Python'
+                sh '. ./activeaza_venv_jenkins'
             }
         }
-
-        stage('Test') {
+        stage('Calitate Cod') {
             steps {
-                echo 'Running unit tests...'
-                sh "docker run --rm ${IMAGE_NAME} python3 -m pytest app/tests/ -v"
-                echo 'Tests finished.'
+                sh '. .venv/bin/activate && pylint --exit-zero app/lib/*.py'
+                sh '. .venv/bin/activate && pylint --exit-zero app/tests/*.py'
+                sh '. .venv/bin/activate && pylint --exit-zero orase.py'
             }
         }
-
+        stage('Testare') {
+            steps {
+                sh '. ./activeaza_venv && pytest app/tests/ -v'
+            }
+        }
         stage('Deploy') {
             steps {
-                echo 'Deploying container...'
-                sh "docker stop ${CONTAINER_NAME} || true"
-                sh "docker rm ${CONTAINER_NAME} || true"
-                sh "docker run -d --name ${CONTAINER_NAME} -p ${PORT_HOST}:${PORT_CONTAINER} ${IMAGE_NAME}"
-                echo "Application running at http://127.0.0.1:${PORT_HOST}"
+                sh 'docker build -t orase_viena:latest .'
+                sh 'docker stop orase_container || true'
+                sh 'docker rm orase_container || true'
+                sh 'docker run -d --name orase_container -p 5011:5011 orase_viena:latest'
             }
         }
-
     }
 
     post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed. Check the logs above.'
-        }
+        success { echo 'Pipeline finalizat cu succes!' }
+        failure { echo 'Pipeline esuat. Verificati logurile.' }
     }
 }
