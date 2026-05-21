@@ -401,7 +401,7 @@ Nu a fost încă realizat.
 
 | ID PR | Autor | Branch |
 |-------|-------|--------|
-| - | - | - |
+| #10 | Ionescu Mircea | dev_Ionescu_Mircea |
 
 ---
 
