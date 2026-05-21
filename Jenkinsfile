@@ -4,29 +4,41 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Build stage - verific proiectul'
-                sh 'python3 --version'
+                echo 'Build - creare mediu virtual Python'
+                sh '. ./activeaza_venv_jenkins'
             }
         }
 
-        stage('Install dependencies') {
+        stage('Calitate Cod') {
             steps {
-                sh 'python3 -m venv .venv_jenkins'
-                sh '. .venv_jenkins/bin/activate && pip install --upgrade pip'
-                sh '. .venv_jenkins/bin/activate && pip install flask pytest'
+                sh '. .venv/bin/activate && pylint --exit-zero app/lib/*.py'
+                sh '. .venv/bin/activate && pylint --exit-zero app/tests/*.py'
+                sh '. .venv/bin/activate && pylint --exit-zero orase.py'
             }
         }
 
-        stage('Test') {
+        stage('Testare') {
             steps {
-                sh '. .venv_jenkins/bin/activate && pytest'
+                sh '. ./activeaza_venv && pytest app/tests/ -v'
             }
         }
 
-        stage('Deployment') {
+        stage('Deploy') {
             steps {
-                echo 'Deployment stage - aplicația este pregătită'
+                sh 'docker build -t orase_reykjavik:latest .'
+                sh 'docker stop orase_container || true'
+                sh 'docker rm orase_container || true'
+                sh 'docker run -d --name orase_container -p 5011:5011 orase_reykjavik:latest'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline finalizat cu succes!'
+        }
+        failure {
+            echo 'Pipeline esuat. Verificati logurile.'
         }
     }
 }
