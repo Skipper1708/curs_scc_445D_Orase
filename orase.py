@@ -3,88 +3,121 @@ from app.lib.biblioteca_orase import populatie_barcelona, descriere_barcelona
 
 app = Flask(__name__)
 
+_ARR = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'
+_BCK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 5-7 7 7 7"/></svg>'
+_PIN = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 13-8 13S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
+_DWN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>'
+_GLB = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+
 STYLE = """
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
   :root {
-    --primary:    #0EA5E9;
-    --secondary:  #38BDF8;
-    --accent:     #EA580C;
-    --bg:         #F0F9FF;
-    --fg:         #0C4A6E;
-    --muted:      #E8F2F8;
-    --border:     #BAE6FD;
-    --white:      #FFFFFF;
-    --dark:       #0F172A;
+    --bg:      #070d1a;
+    --surf:    rgba(255,255,255,0.04);
+    --surf-hv: rgba(255,255,255,0.07);
+    --bd:      rgba(255,255,255,0.08);
+    --bd-hv:   rgba(56,189,248,0.45);
+    --pri:     #38bdf8;
+    --pri-d:   #0ea5e9;
+    --acc:     #f97316;
+    --acc-d:   #ea580c;
+    --gold:    #fbbf24;
+    --text:    #eef4ff;
+    --muted:   rgba(238,244,255,0.52);
+    --dim:     rgba(238,244,255,0.28);
+    --glow-b:  rgba(56,189,248,0.2);
+    --glow-o:  rgba(249,115,22,0.38);
+    --spring:  cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-o:  cubic-bezier(0, 0, 0.2, 1);
+    --t-fast:  150ms;
+    --t-mid:   280ms;
+    --t-enter: 600ms;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
-    color: var(--fg);
-    min-height: 100vh;
+    color: var(--text);
+    min-height: 100dvh;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    padding: 1rem 2.5rem;
+    inset: 0 0 auto 0;
+    z-index: 200;
+    height: 58px;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.75rem;
+    padding: 0 2.5rem;
+    background: rgba(7,13,26,0.82);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border-bottom: 1px solid var(--bd);
   }
-  nav .logo {
+  .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--text);
     text-decoration: none;
     margin-right: auto;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
   }
-  nav a {
-    color: rgba(255,255,255,0.65);
+  .nav-logo svg { color: var(--pri); flex-shrink: 0; }
+  nav a:not(.nav-logo) {
+    color: var(--muted);
     text-decoration: none;
-    font-size: 0.875rem;
+    font-size: 0.84rem;
     font-weight: 500;
     letter-spacing: 0.03em;
-    transition: color 0.2s;
+    padding: 0.3rem 0;
+    position: relative;
+    transition: color var(--t-fast) var(--ease-o);
   }
-  nav a:hover { color: var(--white); }
+  nav a:not(.nav-logo)::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--pri);
+    transition: width var(--t-mid) var(--spring);
+  }
+  nav a:not(.nav-logo):hover { color: var(--text); }
+  nav a:not(.nav-logo):hover::after { width: 100%; }
 
   .hero {
-    min-height: 100vh;
     position: relative;
-    background:
-      linear-gradient(180deg,
-        rgba(12, 74, 110, 0.72) 0%,
-        rgba(14, 165, 233, 0.45) 55%,
-        rgba(234, 88, 12, 0.35) 100%),
-      url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1600&q=80') center/cover no-repeat;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 8rem 2rem 4rem;
+    padding: 8rem 2rem 5rem;
+    overflow: hidden;
+    background:
+      linear-gradient(175deg,
+        rgba(7,13,26,0.72) 0%,
+        rgba(10,45,80,0.58) 45%,
+        rgba(234,88,12,0.22) 100%),
+      url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1600&q=80')
+      center/cover no-repeat;
   }
 
   #heroCanvas {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     z-index: 1;
     pointer-events: none;
   }
@@ -94,299 +127,393 @@ STYLE = """
     z-index: 2;
   }
 
-  .hero-coords {
-    font-size: 0.75rem;
-    font-weight: 500;
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.68rem;
+    font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 1.25rem;
-    animation: fadeDown 0.8s ease both;
+    color: var(--pri);
+    padding: 0.38rem 1rem;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.28);
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+    margin-bottom: 1.5rem;
+    animation: si var(--t-enter) var(--spring) both;
   }
+
   .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(3.25rem, 9vw, 6.75rem);
     font-weight: 700;
-    color: var(--white);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
-    animation: fadeDown 0.9s ease both 0.1s;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    animation: si var(--t-enter) var(--spring) both 80ms;
   }
-  .hero-subtitle {
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.75);
-    letter-spacing: 0.08em;
+
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(130deg, var(--pri) 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 2.5rem;
-    animation: fadeDown 1s ease both 0.2s;
+    margin-bottom: 2.75rem;
+    animation: si var(--t-enter) var(--spring) both 160ms;
   }
+
   .hero-tags {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.55rem;
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 3rem;
-    animation: fadeDown 1.1s ease both 0.3s;
+    animation: si var(--t-enter) var(--spring) both 240ms;
   }
+
   .hero-tag {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.9);
-    padding: 0.35rem 1rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.11);
+    color: rgba(255,255,255,0.75);
+    padding: 0.28rem 0.85rem;
     border-radius: 999px;
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     font-weight: 500;
-    letter-spacing: 0.05em;
-    backdrop-filter: blur(6px);
+    letter-spacing: 0.04em;
   }
+
   .hero-cta {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--accent);
-    color: var(--white);
-    padding: 0.9rem 2.25rem;
-    border-radius: 8px;
+    background: var(--acc);
+    color: #fff;
+    padding: 0.875rem 2.25rem;
+    border-radius: 10px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     text-decoration: none;
     letter-spacing: 0.02em;
-    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(234,88,12,0.4);
-    animation: fadeDown 1.2s ease both 0.4s;
+    min-height: 48px;
+    box-shadow: 0 4px 28px var(--glow-o);
+    touch-action: manipulation;
+    animation: si var(--t-enter) var(--spring) both 320ms;
+    transition:
+      background var(--t-fast) var(--ease-o),
+      box-shadow var(--t-mid) var(--ease-o),
+      transform var(--t-fast) var(--spring);
   }
   .hero-cta:hover {
-    background: #C2410C;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(234,88,12,0.5);
+    background: var(--acc-d);
+    box-shadow: 0 8px 40px var(--glow-o);
+    transform: translateY(-2px) scale(1.02);
   }
+  .hero-cta:active { transform: scale(0.97); transition-duration: 80ms; }
+
   .hero-scroll {
     position: absolute;
-    bottom: 2rem;
-    left: 50%;
+    bottom: 2.25rem; left: 50%;
     transform: translateX(-50%);
-    color: rgba(255,255,255,0.4);
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
+    z-index: 3;
+    color: var(--dim);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    animation: bounce 2s infinite;
-    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    animation: bounce-y 2.6s ease-in-out infinite;
   }
 
   .container {
-    max-width: 900px;
+    max-width: 920px;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 5rem 1.5rem;
   }
 
-  .section-label {
-    font-size: 0.7rem;
+  .sec-label {
+    font-size: 0.67rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--primary);
+    color: var(--pri);
     margin-bottom: 0.5rem;
   }
-  .section-title {
+
+  .sec-title {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
     font-weight: 700;
-    color: var(--dark);
+    color: var(--text);
     margin-bottom: 2rem;
+    line-height: 1.2;
   }
 
   .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    background: var(--surf);
+    border: 1px solid var(--bd);
+    border-radius: 20px;
     padding: 2rem;
-    box-shadow: 0 2px 16px rgba(14,165,233,0.07);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     margin-bottom: 1.5rem;
-    transition: box-shadow 0.25s, transform 0.25s;
-    animation: fadeUp 0.6s ease both;
+    transition:
+      border-color var(--t-mid) var(--ease-o),
+      background var(--t-mid) var(--ease-o),
+      box-shadow var(--t-mid) var(--ease-o),
+      transform var(--t-mid) var(--spring);
   }
   .card:hover {
-    box-shadow: 0 8px 32px rgba(14,165,233,0.15);
+    border-color: var(--bd-hv);
+    background: var(--surf-hv);
+    box-shadow: 0 0 0 1px rgba(56,189,248,0.08), 0 12px 48px rgba(0,0,0,0.45);
     transform: translateY(-3px);
   }
   .card h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--fg);
+    font-size: 1.15rem;
+    color: var(--text);
     margin-bottom: 0.75rem;
+    font-weight: 700;
   }
   .card p {
-    line-height: 1.8;
-    color: #475569;
-    font-size: 0.95rem;
+    line-height: 1.82;
+    color: var(--muted);
+    font-size: 0.93rem;
   }
+  .card strong { color: var(--text); font-weight: 600; }
 
   .stat-card {
-    background: linear-gradient(135deg, var(--fg) 0%, var(--primary) 100%);
-    border-radius: 16px;
-    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg,
+      rgba(14,165,233,0.12) 0%,
+      rgba(56,189,248,0.06) 100%);
+    border: 1px solid rgba(56,189,248,0.22);
+    border-radius: 20px;
+    padding: 2.75rem 2rem;
     text-align: center;
     margin-bottom: 1.5rem;
-    box-shadow: 0 8px 32px rgba(14,165,233,0.25);
-    animation: fadeUp 0.6s ease both;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(20px);
   }
   .stat-card::before {
     content: '';
     position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 50%;
+    inset: 0;
+    background: radial-gradient(ellipse at 65% -5%,
+      rgba(56,189,248,0.16) 0%, transparent 55%);
+    pointer-events: none;
   }
-  .stat-card .label {
-    font-size: 0.7rem;
+  .stat-card .s-label {
+    font-size: 0.67rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 0.75rem;
+    color: var(--pri);
+    margin-bottom: 1rem;
   }
-  .stat-card .value {
+  .stat-card .s-value {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--text);
     line-height: 1.3;
+    position: relative;
   }
 
   .geo-card {
-    background: var(--dark);
-    border-radius: 16px;
-    padding: 2rem;
+    background: var(--surf);
+    border: 1px solid var(--bd);
+    border-radius: 20px;
+    padding: 2rem 2.25rem;
     margin-bottom: 1.5rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    animation: fadeUp 0.6s ease both;
+    gap: 1.75rem 2.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
-  .geo-item .geo-label {
-    font-size: 0.7rem;
+  .geo-item .gi-label {
+    font-size: 0.64rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 0.25rem;
+    color: var(--dim);
+    margin-bottom: 0.3rem;
   }
-  .geo-item .geo-value {
+  .geo-item .gi-value {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    color: var(--secondary);
+    color: var(--pri);
   }
 
   .city-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
     gap: 1rem;
     margin-top: 1.5rem;
   }
   .city-card {
-    background: var(--white);
-    border: 2px solid var(--border);
-    border-radius: 14px;
+    background: var(--surf);
+    border: 1px solid var(--bd);
+    border-radius: 18px;
     padding: 1.75rem 1.25rem;
     text-align: center;
     text-decoration: none;
-    color: var(--fg);
+    color: var(--text);
     font-weight: 600;
-    font-size: 0.95rem;
-    transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
+    font-size: 0.9rem;
+    backdrop-filter: blur(12px);
+    touch-action: manipulation;
+    transition:
+      border-color var(--t-mid) var(--ease-o),
+      background var(--t-mid) var(--ease-o),
+      transform var(--t-mid) var(--spring),
+      box-shadow var(--t-mid) var(--ease-o);
   }
   .city-card:hover {
-    border-color: var(--primary);
-    background: var(--muted);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(14,165,233,0.15);
+    border-color: var(--bd-hv);
+    background: var(--surf-hv);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.38), 0 0 0 1px rgba(56,189,248,0.08);
   }
-  .city-card .city-icon { font-size: 2.25rem; margin-bottom: 0.6rem; }
+  .city-card:active { transform: scale(0.97); transition-duration: 80ms; }
+  .city-flag { font-size: 2.5rem; margin-bottom: 0.65rem; display: block; }
 
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     padding: 0.75rem 1.75rem;
-    background: var(--primary);
-    color: var(--white);
+    background: var(--pri-d);
+    color: #fff;
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: background 0.2s, transform 0.15s;
-    cursor: pointer;
-  }
-  .btn:hover { background: #0284C7; transform: translateY(-1px); }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.65rem 1.4rem;
-    border: 2px solid var(--border);
-    color: var(--fg);
-    background: var(--white);
-    text-decoration: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
     font-size: 0.875rem;
-    transition: all 0.2s;
-    cursor: pointer;
+    min-height: 44px;
+    touch-action: manipulation;
+    box-shadow: 0 2px 16px var(--glow-b);
+    transition:
+      background var(--t-fast) var(--ease-o),
+      box-shadow var(--t-mid) var(--ease-o),
+      transform var(--t-fast) var(--spring);
   }
-  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn:hover {
+    background: var(--pri);
+    box-shadow: 0 6px 24px var(--glow-b);
+    transform: translateY(-1px);
+  }
+  .btn:active { transform: scale(0.97); transition-duration: 80ms; }
 
-  .btn-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
-  .back { margin-bottom: 2rem; }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--bd);
+    color: var(--muted);
+    background: var(--surf);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    min-height: 44px;
+    backdrop-filter: blur(8px);
+    touch-action: manipulation;
+    transition:
+      border-color var(--t-fast) var(--ease-o),
+      color var(--t-fast) var(--ease-o),
+      transform var(--t-fast) var(--spring);
+  }
+  .btn-ghost:hover {
+    border-color: var(--bd-hv);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .btn-ghost:active { transform: scale(0.97); transition-duration: 80ms; }
+
+  .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .back { margin-bottom: 2.25rem; }
 
   .info-banner {
-    background: linear-gradient(135deg, var(--muted), var(--white));
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    background: linear-gradient(135deg,
+      rgba(249,115,22,0.08) 0%,
+      rgba(251,191,36,0.04) 100%);
+    border: 1px solid rgba(249,115,22,0.2);
+    border-radius: 20px;
     padding: 2rem;
     margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
+    backdrop-filter: blur(12px);
   }
   .info-banner p {
-    line-height: 1.8;
-    color: #334155;
-    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+  .info-banner strong { color: var(--text); }
+
+  .divider {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, var(--pri), transparent);
+    margin: 0 0 2rem;
+    border-radius: 999px;
   }
 
   footer {
-    background: var(--dark);
-    color: rgba(255,255,255,0.4);
+    border-top: 1px solid var(--bd);
     text-align: center;
-    padding: 2rem 1rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
+    padding: 2.25rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--dim);
   }
-  footer span { color: var(--secondary); font-weight: 600; }
+  footer .ft-acc { color: var(--pri); font-weight: 600; }
 
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to   { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: no-preference) {
+    .sr {
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      transition:
+        opacity var(--t-enter) var(--spring),
+        transform var(--t-enter) var(--spring);
+      transition-delay: calc(var(--i, 0) * 50ms);
+    }
+    .sr.in {
+      opacity: 1;
+      transform: none;
+    }
   }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
+
+  @keyframes si {
+    from { opacity: 0; transform: translateY(18px) scale(0.96); }
+    to   { opacity: 1; transform: none; }
   }
-  @keyframes bounce {
+  @keyframes bounce-y {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50%       { transform: translateX(-50%) translateY(8px); }
   }
 
-  @media (max-width: 600px) {
-    .geo-card { grid-template-columns: 1fr 1fr; }
-    nav { padding: 1rem 1.25rem; gap: 1rem; }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; gap: 1.25rem; }
     .hero h1 { font-size: 2.75rem; }
+    .geo-card { gap: 1.25rem 1.5rem; padding: 1.5rem; }
+    .container { padding: 4rem 1.25rem; }
+    .stat-card { padding: 2rem 1.5rem; }
   }
 </style>
 """
@@ -394,100 +521,76 @@ STYLE = """
 SHADER_JS = """
 <script>
 (function() {
-  var canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
-  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  var c = document.getElementById('heroCanvas');
+  if (!c) return;
+  var gl = c.getContext('webgl') || c.getContext('experimental-webgl');
   if (!gl) return;
-
   var vs = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
-
   var fs = [
     'precision highp float;',
-    'uniform float T;',
-    'uniform vec2 R;',
-
-    'float h(vec2 p){',
-    '  return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);',
-    '}',
-
-    'float n(vec2 p){',
-    '  vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);',
-    '  return mix(mix(h(i),h(i+vec2(1,0)),u.x),',
-    '             mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);',
-    '}',
-
-    'float fbm(vec2 p){',
-    '  float v=0.,a=.5;',
-    '  for(int i=0;i<4;i++){v+=a*n(p);p=p*2.1+vec2(1.3*float(i)+.7,1.7*float(i)+.3);a*=.5;}',
-    '  return v;',
-    '}',
-
+    'uniform float T;uniform vec2 R;',
+    'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+    'float n(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);',
+    'return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);}',
+    'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p=p*2.1+vec2(1.3*float(i)+.7,1.7*float(i)+.3);a*=.5;}return v;}',
     'void main(){',
-    '  vec2 uv=gl_FragCoord.xy/R;',
-    '  float t=T*.1;',
-    '  vec2 q=vec2(fbm(uv*3.+t),fbm(uv*3.+vec2(1.)));',
-    '  vec2 r=vec2(fbm(uv*3.+2.*q+vec2(1.7,9.2)+.15*t),',
-    '              fbm(uv*3.+2.*q+vec2(8.3,2.8)+.126*t));',
-    '  float f=fbm(uv*3.+2.*r);',
-    '  vec3 c1=vec3(.047,.29,.431);',
-    '  vec3 c2=vec3(.055,.647,.914);',
-    '  vec3 c3=vec3(.918,.345,.047);',
-    '  vec3 col=mix(c1,c2,clamp(f*2.+.2,0.,1.));',
-    '  col=mix(col,c3,clamp(f*f*3.-.5,0.,1.));',
-    '  col+=vec3(.05,.1,.18)*clamp(f*f*f*2.,0.,1.);',
-    '  float vig=1.-length((uv-.5)*1.8);',
-    '  col*=smoothstep(0.,1.,vig)*.6+.4;',
-    '  gl_FragColor=vec4(col,.52);',
-    '}'
-  ].join('\\n');
+    'vec2 uv=gl_FragCoord.xy/R;float t=T*.1;',
+    'vec2 q=vec2(fbm(uv*3.+t),fbm(uv*3.+vec2(1.)));',
+    'vec2 r=vec2(fbm(uv*3.+2.*q+vec2(1.7,9.2)+.15*t),fbm(uv*3.+2.*q+vec2(8.3,2.8)+.126*t));',
+    'float f=fbm(uv*3.+2.*r);',
+    'vec3 c1=vec3(.047,.29,.431),c2=vec3(.055,.647,.914),c3=vec3(.918,.345,.047);',
+    'vec3 col=mix(c1,c2,clamp(f*2.+.2,0.,1.));',
+    'col=mix(col,c3,clamp(f*f*3.-.5,0.,1.));',
+    'col+=vec3(.04,.1,.18)*clamp(f*f*f*2.,0.,1.);',
+    'col*=smoothstep(0.,1.,1.-length((uv-.5)*1.8))*.55+.45;',
+    'gl_FragColor=vec4(col,.5);}'
+  ].join('');
+  function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  var p=gl.createProgram();
+  gl.attachShader(p,sh(gl.VERTEX_SHADER,vs));
+  gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));
+  gl.linkProgram(p);gl.useProgram(p);
+  var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  var al=gl.getAttribLocation(p,'a');gl.enableVertexAttribArray(al);
+  gl.vertexAttribPointer(al,2,gl.FLOAT,false,0,0);
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  var uT=gl.getUniformLocation(p,'T'),uR=gl.getUniformLocation(p,'R'),t0=performance.now();
+  function resize(){c.width=Math.floor(c.offsetWidth*.6);c.height=Math.floor(c.offsetHeight*.6);gl.viewport(0,0,c.width,c.height);}
+  window.addEventListener('resize',resize);resize();
+  (function loop(){gl.uniform1f(uT,(performance.now()-t0)*.001);gl.uniform2f(uR,c.width,c.height);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);requestAnimationFrame(loop);})();
+})();
+</script>
+"""
 
-  function sh(type, src) {
-    var s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    return s;
+MOTION_JS = """
+<script>
+(function() {
+  var els = document.querySelectorAll('.sr');
+  if (!els.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(function(el) { el.classList.add('in'); });
+    return;
   }
-  var prog = gl.createProgram();
-  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs));
-  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  var aLoc = gl.getAttribLocation(prog, 'a');
-  gl.enableVertexAttribArray(aLoc);
-  gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-  var uT = gl.getUniformLocation(prog, 'T');
-  var uR = gl.getUniformLocation(prog, 'R');
-  var t0 = performance.now();
-
-  function resize() {
-    canvas.width  = Math.floor(canvas.offsetWidth  * .6);
-    canvas.height = Math.floor(canvas.offsetHeight * .6);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  (function loop() {
-    gl.uniform1f(uT, (performance.now() - t0) * .001);
-    gl.uniform2f(uR, canvas.width, canvas.height);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(loop);
-  })();
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  var seen = new Map();
+  els.forEach(function(el) {
+    var parent = el.parentElement;
+    var idx = seen.get(parent) || 0;
+    el.style.setProperty('--i', idx);
+    seen.set(parent, idx + 1);
+    io.observe(el);
+  });
 })();
 </script>
 """
 
 
-def page(title, body, nav_links="", with_shader=False):
-    shader = SHADER_JS if with_shader else ""
+def page(title, body, nav_links="", shader=False, motion=False):
     return f"""<!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -498,84 +601,107 @@ def page(title, body, nav_links="", with_shader=False):
 </head>
 <body>
   <nav>
-    <a class="logo" href="/">Orase</a>
+    <a class="nav-logo" href="/">{_GLB} Orase</a>
     <a href="/">Acasa</a>
     <a href="/orase">Orase</a>
     {nav_links}
   </nav>
   {body}
   <footer>
-    Proiect SCC 445D &nbsp;&middot;&nbsp; <span>Vlasceanu Mihnea-Stefan</span> &nbsp;&middot;&nbsp; Barcelona
+    Proiect SCC 445D &nbsp;&middot;&nbsp;
+    <span class="ft-acc">Vlasceanu Mihnea-Stefan</span>
+    &nbsp;&middot;&nbsp; Barcelona
   </footer>
-  {shader}
+  {SHADER_JS if shader else ""}
+  {MOTION_JS if motion else ""}
 </body>
 </html>"""
 
 
 @app.route('/')
 def index():
-    body = """
+    body = f"""
     <div class="hero">
       <canvas id="heroCanvas"></canvas>
-      <div class="hero-coords">41.3851° N &nbsp;·&nbsp; 2.1734° E &nbsp;·&nbsp; 12m alt</div>
-      <h1>Orase</h1>
-      <p class="hero-subtitle">Informatii despre orase din lume</p>
+      <div class="hero-badge">
+        {_PIN} &nbsp;41.3851° N &nbsp;·&nbsp; 2.1734° E
+      </div>
+      <h1>Explore <em>Orase</em></h1>
+      <p class="hero-sub">Informatii despre orase din lume</p>
       <div class="hero-tags">
         <span class="hero-tag">Geografie</span>
         <span class="hero-tag">Populatie</span>
         <span class="hero-tag">Cultura</span>
         <span class="hero-tag">Arhitectura</span>
       </div>
-      <a href="/orase" class="hero-cta">Exploreaza orasele &#8594;</a>
-      <div class="hero-scroll">&#8595; scroll</div>
+      <a href="/orase" class="hero-cta">
+        Exploreaza orasele {_ARR}
+      </a>
+      <div class="hero-scroll">
+        {_DWN}
+        scroll
+      </div>
     </div>
     <div class="container">
-      <div class="section-label">Despre proiect</div>
-      <div class="section-title">Servicii Cloud si Containerizare</div>
-      <div class="card">
+      <div class="sec-label sr">Despre proiect</div>
+      <div class="sec-title sr">Servicii Cloud si Containerizare</div>
+      <div class="card sr">
         <p>Aplicatie web dezvoltata in cadrul cursului <strong>SCC</strong>, grupa 445D.
         Prezinta informatii geografice, demografice si culturale despre orase din intreaga lume.</p>
-        <div class="btn-grid">
-          <a href="/orase" class="btn">Vezi orasele</a>
+        <div class="btn-row">
+          <a href="/orase" class="btn">
+            {_PIN} &nbsp;Vezi orasele
+          </a>
         </div>
       </div>
     </div>
     """
-    return page("Acasa", body, with_shader=True)
+    return page("Acasa", body, shader=True, motion=True)
 
 
 @app.route('/orase')
 def orase():
-    body = """
-    <div style="padding-top:80px"></div>
+    body = f"""
+    <div style="padding-top:58px"></div>
     <div class="container">
-      <div class="back"><a href="/" class="btn-outline">&#8592; Acasa</a></div>
-      <div class="section-label">Explorare</div>
-      <div class="section-title">Orase disponibile</div>
-      <div class="card">
-        <p>Selecteaza un oras pentru a vedea informatii detaliate despre localizare, populatie si cultura.</p>
+      <div class="back sr">
+        <a href="/" class="btn-ghost">{_BCK} &nbsp;Acasa</a>
+      </div>
+      <div class="sec-label sr">Explorare</div>
+      <div class="sec-title sr">Orase disponibile</div>
+      <div class="divider sr"></div>
+      <div class="card sr">
+        <p>Selecteaza un oras pentru a vedea informatii detaliate despre localizare,
+        populatie si cultura.</p>
         <div class="city-grid">
-          <a href="/barcelona" class="city-card">
-            <div class="city-icon">&#127466;&#127480;</div>
+          <a href="/barcelona" class="city-card sr">
+            <span class="city-flag">&#127466;&#127480;</span>
             Barcelona
           </a>
         </div>
       </div>
     </div>
     """
-    return page("Orase", body, nav_links='<a href="/barcelona">Barcelona</a>')
+    return page("Orase", body,
+                nav_links=f'<a href="/barcelona">Barcelona</a>',
+                motion=True)
 
 
 @app.route('/barcelona')
 def barcelona():
-    body = """
-    <div class="hero" style="min-height:60vh; background-image:
-      linear-gradient(180deg, rgba(12,74,110,0.75) 0%, rgba(14,165,233,0.5) 60%, rgba(234,88,12,0.3) 100%),
+    body = f"""
+    <div class="hero" style="min-height:65vh; background-image:
+      linear-gradient(175deg,
+        rgba(7,13,26,0.75) 0%,
+        rgba(10,50,90,0.6) 50%,
+        rgba(234,88,12,0.22) 100%),
       url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80')">
       <canvas id="heroCanvas"></canvas>
-      <div class="hero-coords">41.3851° N &nbsp;·&nbsp; 2.1734° E</div>
-      <h1>Barcelona</h1>
-      <p class="hero-subtitle">Capitala Cataloniei &nbsp;·&nbsp; Spania</p>
+      <div class="hero-badge">
+        {_PIN} &nbsp;41.3851° N &nbsp;·&nbsp; 2.1734° E
+      </div>
+      <h1><em>Barcelona</em></h1>
+      <p class="hero-sub">Capitala Cataloniei &nbsp;·&nbsp; Spania</p>
       <div class="hero-tags">
         <span class="hero-tag">Costa Mediteraneana</span>
         <span class="hero-tag">Arhitectura Gaudi</span>
@@ -583,52 +709,59 @@ def barcelona():
       </div>
     </div>
     <div class="container">
-      <div class="back"><a href="/orase" class="btn-outline">&#8592; Orase</a></div>
-      <div class="geo-card">
+      <div class="back sr">
+        <a href="/orase" class="btn-ghost">{_BCK} &nbsp;Orase</a>
+      </div>
+      <div class="geo-card sr">
         <div class="geo-item">
-          <div class="geo-label">Latitudine</div>
-          <div class="geo-value">41.3851° N</div>
+          <div class="gi-label">Latitudine</div>
+          <div class="gi-value">41.3851° N</div>
         </div>
         <div class="geo-item">
-          <div class="geo-label">Longitudine</div>
-          <div class="geo-value">2.1734° E</div>
+          <div class="gi-label">Longitudine</div>
+          <div class="gi-value">2.1734° E</div>
         </div>
         <div class="geo-item">
-          <div class="geo-label">Altitudine</div>
-          <div class="geo-value">12 m</div>
+          <div class="gi-label">Altitudine</div>
+          <div class="gi-value">12 m</div>
         </div>
         <div class="geo-item">
-          <div class="geo-label">Tara</div>
-          <div class="geo-value">Spania</div>
+          <div class="gi-label">Tara</div>
+          <div class="gi-value">Spania</div>
         </div>
       </div>
-      <div class="card">
+      <div class="card sr">
         <h2>Informatii despre Barcelona</h2>
         <p>Alege o sectiune pentru a afla mai multe despre acest oras mediteranean unic.</p>
-        <div class="btn-grid">
-          <a href="/barcelona/populatie" class="btn">Populatie</a>
-          <a href="/barcelona/descriere" class="btn">Descriere</a>
+        <div class="btn-row">
+          <a href="/barcelona/populatie" class="btn">{_ARR} &nbsp;Populatie</a>
+          <a href="/barcelona/descriere" class="btn">{_ARR} &nbsp;Descriere</a>
         </div>
       </div>
     </div>
     """
-    return page("Barcelona", body, nav_links='<a href="/barcelona">Barcelona</a>', with_shader=True)
+    return page("Barcelona", body,
+                nav_links=f'<a href="/barcelona">Barcelona</a>',
+                shader=True, motion=True)
 
 
 @app.route('/barcelona/populatie')
 def populatie():
     info = populatie_barcelona()
     body = f"""
-    <div style="padding-top:80px"></div>
+    <div style="padding-top:58px"></div>
     <div class="container">
-      <div class="back"><a href="/barcelona" class="btn-outline">&#8592; Barcelona</a></div>
-      <div class="section-label">Date demografice</div>
-      <div class="section-title">Populatia Barcelonei</div>
-      <div class="stat-card">
-        <div class="label">Populatie &nbsp;&#183;&nbsp; Barcelona</div>
-        <div class="value">{info}</div>
+      <div class="back sr">
+        <a href="/barcelona" class="btn-ghost">{_BCK} &nbsp;Barcelona</a>
       </div>
-      <div class="info-banner">
+      <div class="sec-label sr">Date demografice</div>
+      <div class="sec-title sr">Populatia Barcelonei</div>
+      <div class="divider sr"></div>
+      <div class="stat-card sr">
+        <div class="s-label">Populatie &nbsp;&middot;&nbsp; Barcelona</div>
+        <div class="s-value">{info}</div>
+      </div>
+      <div class="info-banner sr">
         <p>Barcelona este al doilea cel mai populat oras din Spania, dupa Madrid.
         Zona metropolitana depaseste <strong>5.5 milioane</strong> de locuitori,
         facand-o unul dintre cele mai mari centre urbane din sudul Europei.
@@ -637,51 +770,59 @@ def populatie():
       </div>
     </div>
     """
-    return page("Populatie Barcelona", body, nav_links='<a href="/barcelona">Barcelona</a>')
+    return page("Populatie Barcelona", body,
+                nav_links=f'<a href="/barcelona">Barcelona</a>',
+                motion=True)
 
 
 @app.route('/barcelona/descriere')
 def descriere():
     info = descriere_barcelona()
     body = f"""
-    <div style="padding-top:80px"></div>
+    <div style="padding-top:58px"></div>
     <div class="container">
-      <div class="back"><a href="/barcelona" class="btn-outline">&#8592; Barcelona</a></div>
-      <div class="section-label">Despre oras</div>
-      <div class="section-title">Descriere</div>
-      <div class="card">
+      <div class="back sr">
+        <a href="/barcelona" class="btn-ghost">{_BCK} &nbsp;Barcelona</a>
+      </div>
+      <div class="sec-label sr">Despre oras</div>
+      <div class="sec-title sr">Descriere</div>
+      <div class="divider sr"></div>
+      <div class="card sr">
         <h2>Prezentare generala</h2>
         <p>{info}</p>
       </div>
-      <div class="card" style="animation-delay:0.1s">
+      <div class="card sr">
         <h2>Repere culturale</h2>
-        <p>Barcelona este renumita la nivel mondial pentru operele arhitectului <strong>Antoni Gaudi</strong>:
-        Sagrada Familia, Park Guell, Casa Batllo si Casa Mila.
-        Orasul a gazduit <strong>Jocurile Olimpice din 1992</strong>, eveniment care a transformat
-        infrastructura urbana. Bucataria catalana, viata de noapte, plajele mediteraneene
-        si muzeele de arta atrag anual peste <strong>12 milioane de turisti</strong>.</p>
+        <p>Barcelona este renumita la nivel mondial pentru operele arhitectului
+        <strong>Antoni Gaudi</strong>: Sagrada Familia, Park Guell, Casa Batllo si Casa Mila.
+        Orasul a gazduit <strong>Jocurile Olimpice din 1992</strong>, eveniment care a
+        transformat infrastructura urbana. Bucataria catalana, viata de noapte, plajele
+        mediteraneene si muzeele de arta atrag anual peste
+        <strong>12 milioane de turisti</strong>.</p>
       </div>
-      <div class="geo-card" style="animation-delay:0.2s">
+      <div class="geo-card sr">
         <div class="geo-item">
-          <div class="geo-label">Fondare</div>
-          <div class="geo-value">230 i.Hr.</div>
+          <div class="gi-label">Fondare</div>
+          <div class="gi-value">230 i.Hr.</div>
         </div>
         <div class="geo-item">
-          <div class="geo-label">Suprafata</div>
-          <div class="geo-value">101 km&sup2;</div>
+          <div class="gi-label">Suprafata</div>
+          <div class="gi-value">101 km&sup2;</div>
         </div>
         <div class="geo-item">
-          <div class="geo-label">Climat</div>
-          <div class="geo-value">Mediteranean</div>
+          <div class="gi-label">Climat</div>
+          <div class="gi-value">Mediteranean</div>
         </div>
         <div class="geo-item">
-          <div class="geo-label">Temperatura medie</div>
-          <div class="geo-value">17.5° C</div>
+          <div class="gi-label">Temp. medie</div>
+          <div class="gi-value">17.5° C</div>
         </div>
       </div>
     </div>
     """
-    return page("Descriere Barcelona", body, nav_links='<a href="/barcelona">Barcelona</a>')
+    return page("Descriere Barcelona", body,
+                nav_links=f'<a href="/barcelona">Barcelona</a>',
+                motion=True)
 
 
 if __name__ == '__main__':
