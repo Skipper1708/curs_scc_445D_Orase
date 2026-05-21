@@ -10,6 +10,7 @@ WORKDIR /home/orase/
 
 COPY app app
 COPY dockerstart.sh dockerstart.sh
+RUN chmod +x dockerstart.sh
 COPY pytest.ini pytest.ini
 COPY quickrequirements.txt quickrequirements.txt
 COPY orase.py orase.py
