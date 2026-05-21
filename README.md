@@ -4,83 +4,62 @@
 ---
 
 ## Cuprins
+
 1. [Scopul proiectului](#scopul-proiectului)
 2. [Date generale](#date-generale)
-3. [Cerințe acoperite în stadiul actual](#cerințe-acoperite-în-stadiul-actual)
-4. [Structura proiectului](#structura-proiectului)
-5. [Funcționalitatea implementată](#funcționalitatea-implementată)
-6. [Descrierea fișierelor](#descrierea-fișierelor)
-7. [Descrierea funcțiilor implementate](#descrierea-funcțiilor-implementate)
-8. [Descrierea rutelor implementate](#descrierea-rutelor-implementate)
-9. [Interfața aplicației](#interfața-aplicației)
-10. [Testare locală](#testare-locală)
-11. [Rezultatele testării](#rezultatele-testării)
-12. [Integrare Git și GitHub](#integrare-git-și-github)
-13. [Jenkins](#jenkins)
-14. [Containerizare Docker](#containerizare-docker)
-15. [Capturi de ecran necesare](#capturi-de-ecran-necesare)
-16. [Pull Request-uri și review](#pull-request-uri-și-review)
-17. [Stadiul actual al implementării](#stadiul-actual-al-implementării)
-18. [Ce mai este de făcut](#ce-mai-este-de-făcut)
-19. [Observații finale](#observații-finale)
+3. [Structura proiectului](#structura-proiectului)
+4. [Funcționalitatea implementată](#funcționalitatea-implementată)
+5. [Descrierea fișierelor](#descrierea-fișierelor)
+6. [Funcții implementate](#funcții-implementate)
+7. [Rute implementate](#rute-implementate)
+8. [Testare](#testare)
+9. [Jenkins](#jenkins)
+10. [Docker](#docker)
+11. [Git și GitHub](#git-și-github)
+12. [Pull Request-uri și review](#pull-request-uri-și-review)
+13. [Stadiul implementării](#stadiul-implementării)
+14. [Ce mai este de făcut](#ce-mai-este-de-făcut)
+15. [Capturi de ecran](#capturi-de-ecran)
+16. [Concluzie](#concluzie)
 
 ---
 
 ## Scopul proiectului
-Acest proiect a fost realizat în cadrul disciplinei **Servicii Cloud și Containerizare** și urmărește folosirea practică a unor tehnologii și unelte întâlnite frecvent în dezvoltarea software:
-- mașină virtuală
+
+Acest proiect a fost realizat în cadrul disciplinei **Servicii Cloud și Containerizare**.
+
+Scopul proiectului este folosirea practică a unor unelte întâlnite în dezvoltarea software și DevOps:
+
 - Git și GitHub
 - Jenkins
 - Docker
-- aplicație web realizată cu Flask
+- Flask
+- pytest
+- pylint
+- mașină virtuală Ubuntu
 
-În cadrul temei de grupă **Orașe**, am ales să implementez funcționalitatea pentru orașul **Reykjavik**.
-
-Scopul implementării actuale a fost:
-- realizarea unei aplicații Flask funcționale
-- adăugarea unui element specific temei
-- implementarea a două funcții specifice în bibliotecă
-- crearea rutelor necesare
-- realizarea testării locale
-- pregătirea proiectului pentru pașii următori: Jenkins, Docker, Pull Request și integrare
+Tema grupei 445D este **Orașe**, iar elementul implementat de mine este orașul **Reykjavik**.
 
 ---
 
 ## Date generale
-- **Nume student:** Ruxandra Apostol
+
+- **Student:** Ruxandra Apostol
 - **Grupă:** 445D
 - **Temă:** Orașe
-- **Element ales:** Reykjavik
-- **Repository de grupă:** `curs_scc_445D_Orase`
-- **Branch personal de dezvoltare:** `dev_ruxandra_apostol`
-- **Branch personal principal:** `main_ruxandra_apostol`
+- **Oraș ales:** Reykjavik
+- **Repository:** `curs_scc_445D_Orase`
+- **Branch de dezvoltare:** `dev_ruxandra_apostol`
+- **Branch principal personal:** `main_ruxandra_apostol`
 - **Fișier principal aplicație:** `orase.py`
-- **Bibliotecă specifică temei:** `app/lib/biblioteca_orase.py`
-
----
-
-## Cerințe acoperite în stadiul actual
-În stadiul actual al proiectului au fost realizate următoarele:
-- alegerea elementului specific temei: **Reykjavik**
-- implementarea fișierului principal `orase.py`
-- crearea bibliotecii `app/lib/biblioteca_orase.py`
-- implementarea a două funcții specifice:
-  - `populatie_reykjavik()`
-  - `descriere_reykjavik()`
-- implementarea rutelor cerute în aplicația principală
-- adăugarea testelor automate
-- rularea locală a testelor cu `pytest`
-- rularea locală a aplicației web în browser
-- commit și push în branch-ul personal de dezvoltare
-
-Nu sunt încă finalizate:
-- crearea Pull Request-ului spre `main_ruxandra_apostol`
-- obținerea unui review de la un coleg
-- integrarea README-ului în `main`
+- **Bibliotecă:** `app/lib/biblioteca_orase.py`
+- **Port local aplicație:** `5000`
+- **Port container Docker:** `5011`
 
 ---
 
 ## Structura proiectului
+
 ```text
 .
 ├── app
@@ -90,8 +69,22 @@ Nu sunt încă finalizate:
 │   │   └── biblioteca_orase.py
 │   └── tests
 │       └── test_orase.py
+├── docs
+│   └── imagini
+│       ├── browser_reykjavik.png
+│       ├── docker_images.png
+│       ├── docker_logs.png
+│       ├── docker_ps_a.png
+│       ├── jenkins_build_success.png
+│       └── jenkins_console_output.png
+├── activeaza_venv
+├── activeaza_venv_jenkins
+├── dockerstart.sh
+├── Dockerfile
+├── Jenkinsfile
 ├── orase.py
 ├── pytest.ini
+├── quickrequirements.txt
 ├── README.md
 ├── LICENSE
 └── .gitignore
@@ -100,150 +93,188 @@ Nu sunt încă finalizate:
 ---
 
 ## Funcționalitatea implementată
+
 Am implementat o aplicație web Flask pentru tema **Orașe**, având ca element ales orașul **Reykjavik**.
 
 Aplicația oferă:
-- o pagină principală de prezentare
-- o pagină pentru tema „Orașe”
-- o pagină dedicată orașului Reykjavik
-- o pagină pentru populația orașului Reykjavik
-- o pagină pentru descrierea extinsă a orașului Reykjavik
 
-Am încercat să fac paginile mai prietenoase vizual, cu:
-- butoane de navigare
-- stilizare HTML + CSS direct în aplicație
-- structurare pe carduri de conținut
-- informații mai bogate decât o simplă propoziție
+- o pagină principală;
+- o pagină pentru tema Orașe;
+- o pagină dedicată orașului Reykjavik;
+- o pagină pentru populația orașului Reykjavik;
+- o pagină pentru descrierea orașului Reykjavik.
 
-Implementarea respectă ideea temei:
-- există un fișier principal dedicat temei: `orase.py`
-- există o bibliotecă dedicată: `app/lib/biblioteca_orase.py`
-- există două funcții specifice elementului ales
-- există rute pentru temă, element și informațiile specifice acestuia
+Interfața este realizată direct în Flask, folosind HTML și CSS incluse în paginile returnate de aplicație.
 
 ---
 
 ## Descrierea fișierelor
 
-### 1. `orase.py`
-Este fișierul principal al aplicației web Flask.
+### `orase.py`
+
+Este fișierul principal al aplicației Flask.
 
 Conține:
-- inițializarea aplicației Flask
-- funcția generală `pagina_html(...)` pentru generarea paginilor
-- toate rutele implementate pentru tema și elementul ales
-- stilizarea generală a paginilor
-- rularea locală a serverului pe portul `5000`
 
-### 2. `app/lib/biblioteca_orase.py`
-Acest fișier conține funcțiile specifice elementului ales, adică orașului Reykjavik:
+- inițializarea aplicației Flask;
+- funcția `pagina_html(...)`, folosită pentru generarea paginilor;
+- rutele aplicației;
+- stilizarea paginilor;
+- pornirea aplicației local pe portul `5000`.
+
+### `app/lib/biblioteca_orase.py`
+
+Conține cele două funcții specifice orașului Reykjavik:
+
 - `populatie_reykjavik()`
 - `descriere_reykjavik()`
 
-Aceste funcții returnează texte utilizate în paginile aplicației.
+Aceste funcții returnează texte care sunt afișate în paginile aplicației.
 
-### 3. `app/tests/test_orase.py`
+### `app/tests/test_orase.py`
+
 Conține testele automate pentru:
-- funcțiile din bibliotecă
-- rutele aplicației Flask
 
-### 4. `pytest.ini`
-Asigură configurarea pentru rularea corectă a testelor cu `pytest`.
+- funcțiile din bibliotecă;
+- rutele Flask;
+- răspunsurile HTTP ale aplicației.
 
-### 5. `README.md`
-Documentează stadiul curent al proiectului, funcționalitatea implementată, testarea, integrarea, containerizarea și pașii rămași.
+### `pytest.ini`
+
+Configurează rularea testelor cu `pytest`.
+
+### `quickrequirements.txt`
+
+Conține dependențele necesare proiectului:
+
+```text
+flask
+pytest
+pylint
+gunicorn
+```
+
+### `Dockerfile`
+
+Definește imaginea Docker a aplicației.
+
+Imaginea folosită este:
+
+```dockerfile
+FROM python:3.10-alpine
+```
+
+### `dockerstart.sh`
+
+Script folosit pentru pornirea aplicației Flask în container pe portul `5011`.
+
+### `activeaza_venv`
+
+Script pentru crearea și activarea mediului virtual local.
+
+### `activeaza_venv_jenkins`
+
+Script folosit în Jenkins pentru crearea mediului virtual și instalarea dependențelor.
+
+### `Jenkinsfile`
+
+Definește pipeline-ul Jenkins pentru build, verificarea calității codului, testare și deploy în container Docker.
 
 ---
 
-## Descrierea funcțiilor implementate
+## Funcții implementate
+
+În fișierul `app/lib/biblioteca_orase.py` au fost implementate funcțiile:
+
+```python
+populatie_reykjavik()
+descriere_reykjavik()
+```
 
 ### `populatie_reykjavik()`
-Această funcție returnează un text descriptiv despre populația orașului Reykjavik.
 
-Textul precizează faptul că Reykjavik este:
-- cel mai mare oraș din Islanda
-- unul dintre cele mai importante centre urbane ale țării
-- un centru administrativ, economic și cultural important
-- un punct de concentrare pentru o parte semnificativă din populația Islandei
+Returnează informații despre populația orașului Reykjavik și despre importanța sa ca principal centru urban, administrativ, economic și cultural al Islandei.
 
 ### `descriere_reykjavik()`
-Această funcție returnează o descriere mai amplă a orașului Reykjavik.
 
-În text sunt prezentate elemente precum:
-- faptul că este capitala Islandei
-- cultura nordică
-- energia geotermală
-- arhitectura specifică
-- apropierea de natură
-- peisajele vulcanice și termale
+Returnează o descriere a orașului Reykjavik, menționând faptul că este capitala Islandei, cunoscută pentru energia geotermală, cultura nordică, arhitectura modernă și apropierea de peisaje naturale spectaculoase.
 
 ---
 
-## Descrierea rutelor implementate
+## Rute implementate
 
-### Ruta `/`
+Aplicația conține următoarele rute:
+
+```text
+/
+```
+
 Pagina principală a aplicației.
 
-Conține:
-- introducere în aplicație
-- explicație despre tema proiectului
-- legături către celelalte pagini
+```text
+/orase
+```
 
-### Ruta `/orase`
-Prezintă tema proiectului și faptul că elementul ales este Reykjavik.
+Pagina temei Orașe.
 
-### Ruta `/orase/reykjavik`
-Prezintă informații generale despre Reykjavik:
-- capitala Islandei
-- centru urban important
-- atracții și particularități
-- legături către paginile specifice
+```text
+/orase/reykjavik
+```
 
-### Ruta `/orase/reykjavik/populatie`
-Prezintă informații mai dezvoltate despre populația orașului Reykjavik și rolul său în Islanda.
+Pagina dedicată orașului Reykjavik.
 
-### Ruta `/orase/reykjavik/descriere`
-Prezintă o descriere extinsă a orașului Reykjavik, inclusiv:
-- informații generale
-- ce face orașul special
-- atracții turistice
-- lucruri interesante care pot fi făcute
-- curiozități despre oraș
+```text
+/orase/reykjavik/populatie
+```
+
+Pagina care afișează informațiile despre populația orașului Reykjavik.
+
+```text
+/orase/reykjavik/descriere
+```
+
+Pagina care afișează descrierea orașului Reykjavik.
 
 ---
 
-## Interfața aplicației
-Interfața a fost realizată în mod simplu, direct în Flask, prin HTML și CSS incluse în paginile returnate de aplicație.
-
-Elemente de interfață folosite:
-- fundal plăcut vizual
-- zonă de antet pentru titlu
-- carduri pentru gruparea informațiilor
-- butoane de navigare între pagini
-- structură clară și ușor de urmărit
-
-Am ales această abordare deoarece este suficientă pentru cerințele proiectului și permite evidențierea clară a funcționalității implementate.
-
----
-
-## Testare locală
+## Testare
 
 ### Activarea mediului virtual
+
 ```bash
-source .venv/bin/activate
+. ./activeaza_venv
 ```
 
 ### Rularea testelor
+
 ```bash
-pytest
+pytest app/tests/ -v
 ```
 
-### Rularea aplicației
-```bash
-python orase.py
+Rezultat obținut:
+
+```text
+7 passed
 ```
 
-### Rutele verificate manual în browser
+Testele verifică:
+
+- funcția `populatie_reykjavik()`;
+- funcția `descriere_reykjavik()`;
+- ruta `/`;
+- ruta `/orase`;
+- ruta `/orase/reykjavik`;
+- ruta `/orase/reykjavik/populatie`;
+- ruta `/orase/reykjavik/descriere`.
+
+### Rularea locală a aplicației
+
+```bash
+python3 orase.py
+```
+
+Rute verificate local în browser:
+
 ```text
 http://127.0.0.1:5000/
 http://127.0.0.1:5000/orase
@@ -254,197 +285,214 @@ http://127.0.0.1:5000/orase/reykjavik/descriere
 
 ---
 
-## Rezultatele testării
-
-### Testare automată
-Testele au fost rulate local cu `pytest`.
-
-Rezultat obținut:
-```text
-7 passed
-```
-
-### Testare manuală
-Aplicația a fost pornită local și toate rutele implementate au răspuns corect cu status `200`.
-
-Din consola Flask s-a observat accesarea cu succes a rutelor:
-- `/`
-- `/orase`
-- `/orase/reykjavik`
-- `/orase/reykjavik/populatie`
-- `/orase/reykjavik/descriere`
-
-Concluzie:
-- funcțiile din bibliotecă sunt folosite corect
-- rutele sunt funcționale
-- aplicația rulează local fără erori în testarea realizată până acum
-
----
-
-## Integrare Git și GitHub
-În această etapă au fost parcurși următorii pași:
-- clonarea repository-ului de grupă
-- crearea mediului local de lucru în mașina virtuală
-- lucrul pe branch-ul personal `dev_ruxandra_apostol`
-- adăugarea fișierelor necesare în proiect
-- realizarea de commit local
-- push în branch-ul personal de dezvoltare
-
-Până în acest moment:
-- codul este prezent în `dev_ruxandra_apostol`
-- testele locale trec
-- documentația este în curs de completare pe branch-ul de dezvoltare
-
----
-
 ## Jenkins
-Jenkins a fost configurat pentru rularea automată a pipeline-ului definit în fișierul `Jenkinsfile`.
 
-Pipeline-ul executat în Jenkins a conținut următoarele etape:
-- Build
-- Install dependencies
-- Test
-- Deployment
+Proiectul conține un fișier `Jenkinsfile`.
 
-Rezultate obținute în Jenkins:
-- build finalizat cu `SUCCESS`
-- testele automate au trecut cu `7 passed`
+Pipeline-ul Jenkins are următoarele etape:
 
-În Jenkins:
-- repository-ul a fost preluat din GitHub
-- branch-ul folosit a fost `dev_ruxandra_apostol`
-- dependențele necesare au fost instalate automat
-- testele au fost executate cu succes
+1. **Build**
+   - creează mediul virtual Python;
+   - instalează dependențele din `quickrequirements.txt`.
+
+2. **Calitate Cod**
+   - rulează `pylint` pe fișierele din aplicație și teste;
+   - este folosit `--exit-zero`, astfel încât pipeline-ul să continue și să afișeze rezultatele.
+
+3. **Testare**
+   - rulează testele automate cu `pytest`.
+
+4. **Deploy**
+   - construiește imaginea Docker;
+   - oprește containerul vechi, dacă există;
+   - șterge containerul vechi, dacă există;
+   - pornește containerul nou pe portul `5011`.
+
+Rezultate obținute:
+
+- pipeline Jenkins finalizat cu succes;
+- testele automate au trecut;
+- aplicația a fost pregătită pentru rulare în container.
 
 ### Capturi Jenkins
 
-#### 1. Build reușit în Jenkins
+#### Build reușit în Jenkins
+
 ![jenkins build success](docs/imagini/jenkins_build_success.png)
 
-#### 2. Console Output cu testele trecute
+#### Console Output Jenkins
+
 ![jenkins console output](docs/imagini/jenkins_console_output.png)
-
-## Containerizare Docker
-Containerizarea aplicației a fost realizată prin adăugarea fișierului `Dockerfile`.
-
-Au fost parcurși următorii pași:
-- construirea imaginii Docker pentru aplicație
-- pornirea containerului pe portul `5000`
-- verificarea accesării aplicației din browser
-- verificarea containerului prin `docker ps -a`
-- verificarea logurilor prin `docker logs`
-
-Rezultatul obținut:
-- imaginea Docker a fost creată cu succes
-- containerul a fost pornit cu succes
-- aplicația a putut fi accesată în browser din container
 
 ---
 
-## Capturi de ecran necesare
-Conform cerințelor proiectului, au fost realizate și adăugate în documentație capturile de ecran pentru:
-1. imaginea Docker creată
-2. containerul creat pe baza imaginii
-3. browserul care accesează aplicația rulată în container
-4. mesajele afișate în consola containerului
-5. build-ul reușit în Jenkins
-6. `Console Output` din Jenkins, unde se vede rezultatul testelor
+## Docker
+
+Containerizarea aplicației a fost realizată folosind `Dockerfile`.
+
+Imaginea Docker este construită cu:
+
+```bash
+docker build -t orase_reykjavik:latest .
+```
+
+Containerul este pornit cu:
+
+```bash
+docker stop orase_container || true
+docker rm orase_container || true
+docker run -d --name orase_container -p 5011:5011 orase_reykjavik:latest
+```
+
+Verificarea containerului:
+
+```bash
+docker ps
+```
+
+Verificarea logurilor:
+
+```bash
+docker logs orase_container
+```
+
+Aplicația din container a fost accesată în browser la:
+
+```text
+http://localhost:5011/
+http://localhost:5011/orase
+http://localhost:5011/orase/reykjavik
+http://localhost:5011/orase/reykjavik/populatie
+http://localhost:5011/orase/reykjavik/descriere
+```
+
+Logurile containerului au confirmat accesarea rutelor cu status `200`.
+
+---
+
+## Git și GitHub
+
+Am lucrat pe branch-ul personal:
+
+```text
+dev_ruxandra_apostol
+```
+
+Modificările au fost salvate prin commit și trimise pe GitHub prin push.
+
+A fost realizat Pull Request către branch-ul personal principal:
+
+```text
+dev_ruxandra_apostol -> main_ruxandra_apostol
+```
+
+Pull Request-ul a fost verificat și integrat.
 
 ---
 
 ## Pull Request-uri și review
 
-### Pull Request pentru integrarea în branch-ul personal principal
-Nu a fost încă realizat.
+### Pull Request realizat
 
-Va fi creat:
-- din `dev_ruxandra_apostol`
-- către `main_ruxandra_apostol`
+A fost realizat Pull Request din:
 
-### Pull Request pentru integrarea în `main`
-Nu a fost încă realizat.
+```text
+dev_ruxandra_apostol
+```
 
-### Review primit de la coleg
-Nu a fost încă obținut.
+către:
 
-### Pull Request-uri la care am făcut review
-Momentan nu există review-uri efectuate de mine, deci nu există încă ID-uri de trecut în această secțiune.
+```text
+main_ruxandra_apostol
+```
+
+Pull Request-ul a fost aprobat și integrat în branch-ul principal personal.
+
+### Review primit
+
+Am primit review de la un coleg din grupă, conform cerințelor proiectului.
+
+### Review oferit
+
+Am participat la procesul de code review în cadrul proiectului de grupă.
 
 ---
 
-## Stadiul actual al implementării
+## Stadiul implementării
 
 ### Realizat
-- [x] alegerea elementului specific: Reykjavik
-- [x] creare fișier principal `orase.py`
-- [x] creare `app/lib/biblioteca_orase.py`
-- [x] implementare funcții specifice
-- [x] implementare rute
-- [x] pagină principală cu navigare
-- [x] pagină dedicată orașului
-- [x] pagină pentru populație
-- [x] pagină pentru descriere extinsă
-- [x] testare automată locală
-- [x] testare manuală locală
-- [x] commit și push în branch-ul personal de dezvoltare
-- [x] documentare pe branch-ul de dezvoltare
-- [x] Jenkinsfile
-- [x] rulare pipeline Jenkins
-- [x] build Jenkins cu `SUCCESS`
-- [x] teste trecute în Jenkins (`7 passed`)
-- [x] Dockerfile
-- [x] build imagine Docker
-- [x] pornire container Docker
-- [x] accesare aplicație din container
-- [x] capturi de ecran pentru containerizare
-- [x] capturi de ecran pentru Jenkins
 
-### Nerealizat încă
-- [ ] Pull Request din `dev_ruxandra_apostol` în `main_ruxandra_apostol`
-- [ ] review de la un coleg
-- [ ] integrare README în `main`
+- [x] alegerea orașului Reykjavik;
+- [x] implementarea aplicației Flask;
+- [x] implementarea fișierului `orase.py`;
+- [x] implementarea bibliotecii `app/lib/biblioteca_orase.py`;
+- [x] implementarea funcțiilor `populatie_reykjavik()` și `descriere_reykjavik()`;
+- [x] implementarea rutelor Flask;
+- [x] implementarea testelor automate;
+- [x] rularea testelor cu `pytest`;
+- [x] crearea fișierului `pytest.ini`;
+- [x] crearea fișierului `quickrequirements.txt`;
+- [x] crearea fișierului `Dockerfile`;
+- [x] crearea scriptului `dockerstart.sh`;
+- [x] crearea scriptului `activeaza_venv`;
+- [x] crearea scriptului `activeaza_venv_jenkins`;
+- [x] crearea fișierului `Jenkinsfile`;
+- [x] rularea pipeline-ului Jenkins;
+- [x] build Jenkins cu succes;
+- [x] teste trecute în Jenkins;
+- [x] build imagine Docker;
+- [x] pornire container Docker;
+- [x] accesare aplicație din container;
+- [x] verificare loguri Docker;
+- [x] capturi de ecran pentru Jenkins;
+- [x] capturi de ecran pentru Docker;
+- [x] commit și push pe GitHub;
+- [x] Pull Request către `main_ruxandra_apostol`;
+- [x] review primit de la coleg.
 
 ---
 
 ## Ce mai este de făcut
-Pașii rămași pentru finalizarea completă a proiectului sunt:
-1. crearea Pull Request-ului din `dev_ruxandra_apostol` în `main_ruxandra_apostol`
-2. obținerea unui review de la cel puțin un coleg
-3. integrarea README-ului în branch-ul `main`
-4. actualizarea finală a documentației după PR și review
+
+- verificarea finală înainte de prezentare;
+- rularea aplicației în container;
+- demonstrarea testelor, Jenkins și Docker în cadrul susținerii;
+- integrarea documentației la nivelul branch-ului `main`, dacă este necesar conform cerințelor de grupă.
 
 ---
 
-## Observații finale
-Aplicația a fost realizată pornind de la modelul general recomandat pentru proiect și a fost adaptată pentru tema **Orașe** și pentru elementul ales, **Reykjavik**.
+## Capturi de ecran
 
-Implementarea actuală respectă ideile principale cerute:
-- fișier principal al aplicației
-- bibliotecă dedicată cu două funcții specifice
-- rute clare pentru temă și element
-- testare locală
-- lucru pe branch personal de dezvoltare
-- documentare pe GitHub
+### Imaginea Docker creată
 
-README-ul va fi actualizat în continuare după:
-- realizarea Pull Request-ului
-- obținerea review-ului
-- integrarea în branch-urile necesare
-
----
-
-## Capturi de ecran realizate
-
-### 1. Imaginea Docker creată
 ![docker images](docs/imagini/docker_images.png)
 
-### 2. Containerul creat pe baza imaginii
-![docker ps -a](docs/imagini/docker_ps_a.png)
+### Containerul creat pe baza imaginii
 
-### 3. Browserul care accesează aplicația rulată în container
+![docker ps](docs/imagini/docker_ps_a.png)
+
+### Browserul care accesează aplicația rulată în container
+
 ![browser aplicatie](docs/imagini/browser_reykjavik.png)
 
-### 4. Mesajele afișate în consola containerului
+### Mesajele afișate în consola containerului
+
 ![docker logs](docs/imagini/docker_logs.png)
 
+### Jenkins build success
+
+![jenkins build success](docs/imagini/jenkins_build_success.png)
+
+### Jenkins console output
+
+![jenkins console output](docs/imagini/jenkins_console_output.png)
+
 ---
+
+## Concluzie
+
+Proiectul implementează funcționalitatea pentru orașul **Reykjavik** în cadrul temei **Orașe**.
+
+Aplicația este funcțională, testele trec, pipeline-ul Jenkins a fost configurat, iar aplicația a fost containerizată cu Docker și accesată din browser.
+
+Proiectul este pregătit pentru prezentare.
