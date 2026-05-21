@@ -80,7 +80,27 @@ docker build -t orase_viena_urmuz .
 docker run -d --name container_viena -p 8020:5011 orase_viena_urmuz
 ```
 Acces din browser: http://127.0.0.1:8020
+## Screenshots
 
+### Jenkins Pipeline - SUCCESS
+screenshot jenkins pipeline success
+
+### Docker images
+screenshot docker images
+
+### Docker container running
+screenshot docker ps
+
+### Aplicatie in browser din container
+screenshot browser 127.0.0.1:5011
+
+### Docker logs
+screenshot docker logs
+
+## Pull Request-uri review
+| PR | Autor | Status |
+|---|---|---|
+| #8 | laururmuz | Merged |
 ## Pull Request-uri si review
 - PR creat: dev_Urmuz_Laurentiu → main_Urmuz_Laurentiu
 - Review: in asteptare
