@@ -74,8 +74,7 @@ Scopul implementării actuale a fost:
 - containerizarea aplicației cu Docker
 
 Nu sunt încă finalizate:
-- crearea Pull Request-ului spre `main_Rezus_Catalin`
-- obținerea unui review de la un coleg
+- obținerea unui review de la un coleg pentru PR-ul deschis
 - integrarea README-ului în `main`
 
 ---
@@ -289,8 +288,16 @@ Structura branch-urilor:
 ```
 main                    ← branch-ul principal al grupei
 dev_Rezus_Catalin       ← dezvoltare personală (cod + teste + docker)
-main_Rezus_Catalin      ← branch personal principal (va primi PR)
+main_Rezus_Catalin      ← branch personal principal (a primit PR, în așteptarea review-ului)
 ```
+
+**Workflow Git urmat:**
+1. `git checkout dev_Rezus_Catalin`
+2. modificări fișiere
+3. `git add <fisier>`
+4. `git commit -m "mesaj"`
+5. `git push`
+6. Pull Request din `dev_Rezus_Catalin` → `main_Rezus_Catalin`
 
 ---
 
@@ -325,7 +332,6 @@ Pipeline-ul executat în Jenkins a conținut următoarele etape:
 #### 2. Console Output cu testele trecute
 ![jenkins console output](docs/imagini/jenkins_console_output.png)
 
-> **Notă:** capturile Jenkins vor fi adăugate după rularea finală a pipeline-ului.
 
 ---
 
@@ -386,11 +392,7 @@ Flask servește corect toate rutele implementate — toate returnează status `2
 ## Pull Request-uri și review
 
 ### Pull Request pentru integrarea în branch-ul personal principal
-Nu a fost încă realizat.
-
-Va fi creat:
-- din `dev_Rezus_Catalin`
-- către `main_Rezus_Catalin`
+PR creat din `dev_Rezus_Catalin` către `main_Rezus_Catalin` — în așteptarea review-ului din partea unui coleg.
 
 ### Pull Request pentru integrarea în `main`
 Nu a fost încă realizat.
@@ -426,22 +428,20 @@ Nu a fost încă realizat.
 - [x] build imagine Docker
 - [x] pornire container Docker
 - [x] accesare aplicație din container
+- [x] capturi de ecran Docker și Jenkins adăugate în README
+- [x] Pull Request deschis din `dev_Rezus_Catalin` în `main_Rezus_Catalin`
 
 ### Nerealizat încă
-- [ ] Pull Request din `dev_Rezus_Catalin` în `main_Rezus_Catalin`
-- [ ] review de la un coleg
+- [ ] review de la un coleg pentru PR-ul deschis
 - [ ] integrare README în `main`
-- [ ] capturi de ecran adăugate în README
 
 ---
 
 ## Ce mai este de făcut
 Pașii rămași pentru finalizarea completă a proiectului sunt:
-1. realizarea capturilor de ecran (Docker + Jenkins) și adăugarea lor în `docs/imagini/`
-2. crearea Pull Request-ului din `dev_Rezus_Catalin` în `main_Rezus_Catalin`
-3. obținerea unui review de la cel puțin un coleg
-4. integrarea README-ului în branch-ul `main` al grupei
-5. actualizarea finală a documentației după PR și review
+1. obținerea unui review de la cel puțin un coleg pentru PR-ul deschis
+2. integrarea README-ului în branch-ul `main` al grupei
+3. actualizarea finală a documentației după review și merge
 
 ---
 
