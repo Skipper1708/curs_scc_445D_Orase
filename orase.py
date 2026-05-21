@@ -5,110 +5,385 @@ app = Flask(__name__)
 
 STYLE = """
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --primary:    #0EA5E9;
+    --secondary:  #38BDF8;
+    --accent:     #EA580C;
+    --bg:         #F0F9FF;
+    --fg:         #0C4A6E;
+    --muted:      #E8F2F8;
+    --border:     #BAE6FD;
+    --white:      #FFFFFF;
+    --dark:       #0F172A;
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
-    font-family: 'Montserrat', sans-serif;
-    background: #f0f4f8;
-    color: #1a202c;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
+  /* NAV */
   nav {
-    background: #003399;
-    padding: 1rem 2rem;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 1rem 2.5rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    gap: 2rem;
   }
-  nav .logo { font-weight: 700; font-size: 1.1rem; color: #fff; text-decoration: none; margin-right: auto; }
-  nav a { color: #ffffffcc; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
-  nav a:hover { color: #fff; }
+  nav .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    margin-right: auto;
+    letter-spacing: 0.02em;
+  }
+  nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
 
+  /* HERO */
   .hero {
-    background: linear-gradient(135deg, #003399 0%, #001a66 100%);
-    color: white;
-    padding: 4rem 2rem;
+    min-height: 100vh;
+    background:
+      linear-gradient(180deg,
+        rgba(12, 74, 110, 0.72) 0%,
+        rgba(14, 165, 233, 0.45) 55%,
+        rgba(234, 88, 12, 0.35) 100%),
+      url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1600&q=80') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
   }
-  .hero .flag { font-size: 3.5rem; margin-bottom: 0.75rem; }
-  .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .hero p { font-size: 1.05rem; opacity: 0.8; margin-bottom: 2rem; }
+  .hero-coords {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1.25rem;
+    animation: fadeDown 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    animation: fadeDown 0.9s ease both 0.1s;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 1s ease both 0.2s;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+    animation: fadeDown 1.1s ease both 0.3s;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(6px);
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: var(--white);
+    padding: 0.9rem 2.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(234,88,12,0.4);
+    animation: fadeDown 1.2s ease both 0.4s;
+  }
+  .hero-cta:hover {
+    background: #C2410C;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(234,88,12,0.5);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
 
-  .container { max-width: 860px; margin: 2rem auto; padding: 0 1.5rem; }
+  /* CONTAINER */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
 
+  /* SECTION TITLE */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 2rem;
+  }
+
+  /* CARDS */
   .card {
-    background: white;
-    border-radius: 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgba(14,165,233,0.07);
     margin-bottom: 1.5rem;
+    transition: box-shadow 0.25s, transform 0.25s;
+    animation: fadeUp 0.6s ease both;
   }
-  .card h2 { font-size: 1.25rem; font-weight: 600; color: #003399; margin-bottom: 0.75rem; }
-  .card p { line-height: 1.75; color: #4a5568; }
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(14,165,233,0.15);
+    transform: translateY(-3px);
+  }
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+  }
+  .card p {
+    line-height: 1.8;
+    color: #475569;
+    font-size: 0.95rem;
+  }
 
+  /* STAT CARD */
   .stat-card {
-    background: linear-gradient(135deg, #003399, #0055cc);
-    color: white;
-    border-radius: 14px;
+    background: linear-gradient(135deg, var(--fg) 0%, var(--primary) 100%);
+    border-radius: 16px;
     padding: 2.5rem 2rem;
     text-align: center;
     margin-bottom: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,51,153,0.3);
+    box-shadow: 0 8px 32px rgba(14,165,233,0.25);
+    animation: fadeUp 0.6s ease both;
+    position: relative;
+    overflow: hidden;
   }
-  .stat-card .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.75; margin-bottom: 0.75rem; }
-  .stat-card .value { font-size: 1.4rem; font-weight: 700; }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .stat-card .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.75rem;
+  }
+  .stat-card .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
 
-  .btn-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  /* GEO CARD */
+  .geo-card {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .geo-item .geo-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.25rem;
+  }
+  .geo-item .geo-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--secondary);
+  }
 
+  /* CITY GRID */
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .city-card {
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem 1.25rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--fg);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .city-card:hover {
+    border-color: var(--primary);
+    background: var(--muted);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(14,165,233,0.15);
+  }
+  .city-card .city-icon { font-size: 2.25rem; margin-bottom: 0.6rem; }
+
+  /* BUTTONS */
   .btn {
-    display: inline-block;
-    padding: 0.75rem 1.6rem;
-    background: #003399;
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--primary);
+    color: var(--white);
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.9rem;
     transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
   }
-  .btn:hover { background: #0044cc; transform: translateY(-2px); }
+  .btn:hover { background: #0284C7; transform: translateY(-1px); }
 
   .btn-outline {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     padding: 0.65rem 1.4rem;
-    border: 2px solid #003399;
-    color: #003399;
+    border: 2px solid var(--border);
+    color: var(--fg);
+    background: var(--white);
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     transition: all 0.2s;
+    cursor: pointer;
   }
-  .btn-outline:hover { background: #003399; color: white; }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
-  .back { margin-bottom: 1.5rem; }
+  .btn-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .back { margin-bottom: 2rem; }
 
-  .city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
-  .city-card {
-    background: #f7fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
+  /* INFO BANNER */
+  .info-banner {
+    background: linear-gradient(135deg, var(--muted), var(--white));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .info-banner p {
+    line-height: 1.8;
+    color: #334155;
+    font-size: 0.95rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.4);
     text-align: center;
-    text-decoration: none;
-    color: #1a202c;
-    font-weight: 600;
-    transition: all 0.2s;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
   }
-  .city-card:hover { border-color: #003399; background: #ebf0ff; transform: translateY(-2px); }
-  .city-card .city-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  footer span { color: var(--secondary); font-weight: 600; }
 
-  footer { text-align: center; padding: 2.5rem 1rem; color: #a0aec0; font-size: 0.78rem; margin-top: 1rem; }
-  footer span { color: #003399; font-weight: 600; }
+  /* ANIMATIONS */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @media (max-width: 600px) {
+    .geo-card { grid-template-columns: 1fr 1fr; }
+    nav { padding: 1rem 1.25rem; gap: 1rem; }
+    .hero h1 { font-size: 2.75rem; }
+  }
 </style>
 """
 
@@ -124,13 +399,15 @@ def page(title, body, nav_links=""):
 </head>
 <body>
   <nav>
-    <a class="logo" href="/">🌍 Orase</a>
+    <a class="logo" href="/">Orase</a>
     <a href="/">Acasa</a>
     <a href="/orase">Orase</a>
     {nav_links}
   </nav>
   {body}
-  <footer>Proiect SCC 445D &nbsp;·&nbsp; <span>Vlasceanu Mihnea-Stefan</span> &nbsp;·&nbsp; Barcelona</footer>
+  <footer>
+    Proiect SCC 445D &nbsp;&middot;&nbsp; <span>Vlasceanu Mihnea-Stefan</span> &nbsp;&middot;&nbsp; Barcelona
+  </footer>
 </body>
 </html>"""
 
@@ -139,18 +416,26 @@ def page(title, body, nav_links=""):
 def index():
     body = """
     <div class="hero">
-      <div class="flag">🌍</div>
-      <h1>Aplicatie Orase</h1>
-      <p>Informatii despre orase din intreaga lume</p>
-      <a href="/orase" class="btn">Exploreaza orasele →</a>
+      <div class="hero-coords">41.3851° N &nbsp;·&nbsp; 2.1734° E &nbsp;·&nbsp; 12m alt</div>
+      <h1>Orase</h1>
+      <p class="hero-subtitle">Informatii despre orase din lume</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Geografie</span>
+        <span class="hero-tag">Populatie</span>
+        <span class="hero-tag">Cultura</span>
+        <span class="hero-tag">Arhitectura</span>
+      </div>
+      <a href="/orase" class="hero-cta">Exploreaza orasele &#8594;</a>
+      <div class="hero-scroll">&#8595; scroll</div>
     </div>
     <div class="container">
+      <div class="section-label">Despre proiect</div>
+      <div class="section-title">Servicii Cloud si Containerizare</div>
       <div class="card">
-        <h2>Despre proiect</h2>
-        <p>Aplicatie web dezvoltata in cadrul cursului <strong>Servicii Cloud si Containerizare</strong>.
-        Prezinta informatii despre orase: populatie, descriere si repere culturale.</p>
+        <p>Aplicatie web dezvoltata in cadrul cursului <strong>SCC</strong>, grupa 445D.
+        Prezinta informatii geografice, demografice si culturale despre orase din intreaga lume.</p>
         <div class="btn-grid">
-          <a href="/orase" class="btn">Vezi orasele disponibile</a>
+          <a href="/orase" class="btn">Vezi orasele</a>
         </div>
       </div>
     </div>
@@ -161,14 +446,16 @@ def index():
 @app.route('/orase')
 def orase():
     body = """
+    <div style="padding-top:80px"></div>
     <div class="container">
-      <div class="back"><a href="/" class="btn-outline">← Acasa</a></div>
+      <div class="back"><a href="/" class="btn-outline">&#8592; Acasa</a></div>
+      <div class="section-label">Explorare</div>
+      <div class="section-title">Orase disponibile</div>
       <div class="card">
-        <h2>🗺️ Orase disponibile</h2>
-        <p>Selecteaza un oras pentru a vedea informatii detaliate.</p>
+        <p>Selecteaza un oras pentru a vedea informatii detaliate despre localizare, populatie si cultura.</p>
         <div class="city-grid">
           <a href="/barcelona" class="city-card">
-            <div class="city-flag">🇪🇸</div>
+            <div class="city-icon">&#127466;&#127480;</div>
             Barcelona
           </a>
         </div>
@@ -181,19 +468,44 @@ def orase():
 @app.route('/barcelona')
 def barcelona():
     body = """
-    <div class="hero">
-      <div class="flag">🇪🇸</div>
+    <div class="hero" style="min-height:60vh; background-image:
+      linear-gradient(180deg, rgba(12,74,110,0.75) 0%, rgba(14,165,233,0.5) 60%, rgba(234,88,12,0.3) 100%),
+      url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80')">
+      <div class="hero-coords">41.3851° N &nbsp;·&nbsp; 2.1734° E</div>
       <h1>Barcelona</h1>
-      <p>Capitala Cataloniei &nbsp;·&nbsp; Spania</p>
+      <p class="hero-subtitle">Capitala Cataloniei &nbsp;·&nbsp; Spania</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Costa Mediteraneana</span>
+        <span class="hero-tag">Arhitectura Gaudi</span>
+        <span class="hero-tag">JO 1992</span>
+      </div>
     </div>
     <div class="container">
-      <div class="back"><a href="/orase" class="btn-outline">← Orase</a></div>
+      <div class="back"><a href="/orase" class="btn-outline">&#8592; Orase</a></div>
+      <div class="geo-card">
+        <div class="geo-item">
+          <div class="geo-label">Latitudine</div>
+          <div class="geo-value">41.3851° N</div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-label">Longitudine</div>
+          <div class="geo-value">2.1734° E</div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-label">Altitudine</div>
+          <div class="geo-value">12 m</div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-label">Tara</div>
+          <div class="geo-value">Spania</div>
+        </div>
+      </div>
       <div class="card">
         <h2>Informatii despre Barcelona</h2>
-        <p>Alege o sectiune pentru a afla mai multe despre acest oras mediteranean.</p>
+        <p>Alege o sectiune pentru a afla mai multe despre acest oras mediteranean unic.</p>
         <div class="btn-grid">
-          <a href="/barcelona/populatie" class="btn">👥 Populatie</a>
-          <a href="/barcelona/descriere" class="btn">📖 Descriere</a>
+          <a href="/barcelona/populatie" class="btn">Populatie</a>
+          <a href="/barcelona/descriere" class="btn">Descriere</a>
         </div>
       </div>
     </div>
@@ -205,17 +517,21 @@ def barcelona():
 def populatie():
     info = populatie_barcelona()
     body = f"""
+    <div style="padding-top:80px"></div>
     <div class="container">
-      <div class="back"><a href="/barcelona" class="btn-outline">← Barcelona</a></div>
+      <div class="back"><a href="/barcelona" class="btn-outline">&#8592; Barcelona</a></div>
+      <div class="section-label">Date demografice</div>
+      <div class="section-title">Populatia Barcelonei</div>
       <div class="stat-card">
-        <div class="label">👥 Populatie</div>
+        <div class="label">Populatie &nbsp;&#183;&nbsp; Barcelona</div>
         <div class="value">{info}</div>
       </div>
-      <div class="card">
-        <h2>Date demografice</h2>
-        <p>Barcelona este unul dintre cele mai populate orase din Spania si din Europa de Sud.
-        Zona metropolitana a orasului depaseste 5 milioane de locuitori, facand-o al doilea mare
-        centru urban din Peninsula Iberica, dupa Madrid.</p>
+      <div class="info-banner">
+        <p>Barcelona este al doilea cel mai populat oras din Spania, dupa Madrid.
+        Zona metropolitana depaseste <strong>5.5 milioane</strong> de locuitori,
+        facand-o unul dintre cele mai mari centre urbane din sudul Europei.
+        Densitatea populatiei in centrul orasului este de aproximativ
+        <strong>16.000 locuitori/km&sup2;</strong>.</p>
       </div>
     </div>
     """
@@ -226,19 +542,40 @@ def populatie():
 def descriere():
     info = descriere_barcelona()
     body = f"""
+    <div style="padding-top:80px"></div>
     <div class="container">
-      <div class="back"><a href="/barcelona" class="btn-outline">← Barcelona</a></div>
+      <div class="back"><a href="/barcelona" class="btn-outline">&#8592; Barcelona</a></div>
+      <div class="section-label">Despre oras</div>
+      <div class="section-title">Descriere</div>
       <div class="card">
-        <h2>📖 Descriere</h2>
+        <h2>Prezentare generala</h2>
         <p>{info}</p>
       </div>
-      <div class="card">
-        <h2>🏛️ Repere culturale</h2>
-        <p>Barcelona este renumita pentru opera arhitectonica a lui <strong>Antoni Gaudi</strong>
-        — Sagrada Familia, Park Guell, Casa Batllo. Orasul a gazduit <strong>Jocurile Olimpice din 1992</strong>
-        si este sede al echipei de fotbal <strong>FC Barcelona</strong>.
-        Bucataria catalana, plajele mediteraneene si viata culturala efervescenta
-        atrag anual peste 12 milioane de turisti.</p>
+      <div class="card" style="animation-delay:0.1s">
+        <h2>Repere culturale</h2>
+        <p>Barcelona este renumita la nivel mondial pentru operele arhitectului <strong>Antoni Gaudi</strong>:
+        Sagrada Familia, Park Guell, Casa Batllo si Casa Mila.
+        Orasul a gazduit <strong>Jocurile Olimpice din 1992</strong>, eveniment care a transformat
+        infrastructura urbana. Bucataria catalana, viata de noapte, plajele mediteraneene
+        si muzeele de arta atrag anual peste <strong>12 milioane de turisti</strong>.</p>
+      </div>
+      <div class="geo-card" style="animation-delay:0.2s">
+        <div class="geo-item">
+          <div class="geo-label">Fondare</div>
+          <div class="geo-value">230 i.Hr.</div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-label">Suprafata</div>
+          <div class="geo-value">101 km&sup2;</div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-label">Climat</div>
+          <div class="geo-value">Mediteranean</div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-label">Temperatura medie</div>
+          <div class="geo-value">17.5° C</div>
+        </div>
       </div>
     </div>
     """
