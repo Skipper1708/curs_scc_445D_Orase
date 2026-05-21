@@ -28,8 +28,9 @@ Aplicatie web Flask care prezinta informatii despre **Las Vegas**.
 - [x] Jenkinsfile cu 4 stage-uri
 - [x] Scripts: `dockerstart.sh`, `activeaza_venv`, `activeaza_venv_jenkins`
 - [x] `pytest.ini` si `quickrequirements.txt`
-- [ ] Screenshot Jenkins PASS (dupa rulare pe VM)
-- [ ] Screenshots Docker (dupa rulare pe VM)
+- [x] Jenkins pipeline PASS
+- [x] Docker build + run functional
+- [x] Aplicatie accesibila din browser
 
 ---
 
@@ -50,12 +51,18 @@ pytest app/tests/ -v
 ```
 
 ### Rulare cu Jenkins
+
 1. Pe VM, configureaza Jenkins sa pointeze pe branch-ul `dev_Ionescu_Mircea`
 2. Ruleaza pipeline-ul manual
 3. Verifica toate cele 4 stage-uri: Build, Calitate Cod, Testare, Deploy
 
-**Screenshot Jenkins PASS:**
-*(de adaugat dupa rulare pe VM)*
+**Screenshot Jenkins PASS — Blue Ocean:**
+
+![Jenkins Pipeline PASS](screenshots/jenkins_pass.png)
+
+**Screenshot Jenkins Console — Finished: SUCCESS:**
+
+![Jenkins Console SUCCESS](screenshots/jenkins_console.png)
 
 ---
 
@@ -93,14 +100,23 @@ docker rm orase_container || true
 docker run -d --name orase_container -p 5011:5011 orase_las_vegas:latest
 ```
 
-Acceseaza din browser: `http://<IP-VM>:5011`
+Acceseaza din browser: `http://localhost:5011`
 
-**Screenshots:**
-*(de adaugat dupa rulare pe VM)*
-- `docker images` — imaginea creata
-- `docker ps` — containerul pornit
-- Browser accesat din container
-- `docker logs orase_container` — loguri
+**docker images — imaginea creata:**
+
+![Docker Images](screenshots/docker_images.png)
+
+**docker ps — containerul pornit:**
+
+![Docker PS](screenshots/docker_ps.png)
+
+**Browser — aplicatie accesata din container:**
+
+![Site Las Vegas](screenshots/site_las_vegas.png)
+
+**docker logs orase_container — loguri:**
+
+![Docker Logs](screenshots/docker_logs.png)
 
 ---
 
@@ -114,8 +130,7 @@ Acceseaza din browser: `http://<IP-VM>:5011`
 
 ## 7. Ce mai este de facut
 
-- [ ] Rulat Jenkins pe VM si adaugat screenshot PASS
-- [ ] Rulat Docker pe VM si adaugat cele 4 screenshots
+- [ ] Screenshot `docker logs orase_container` si adaugat in README
 - [ ] Creat PR `dev_Ionescu_Mircea` → `main_Ionescu_Mircea` cu reviewer
 - [ ] Creat PR cu README catre `main` al grupei
 - [ ] Facut review la PR-ul unui coleg
