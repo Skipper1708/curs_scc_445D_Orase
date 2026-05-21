@@ -31,7 +31,6 @@ STYLE = """
     overflow-x: hidden;
   }
 
-  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -64,9 +63,9 @@ STYLE = """
   }
   nav a:hover { color: var(--white); }
 
-  /* HERO */
   .hero {
     min-height: 100vh;
+    position: relative;
     background:
       linear-gradient(180deg,
         rgba(12, 74, 110, 0.72) 0%,
@@ -79,8 +78,22 @@ STYLE = """
     justify-content: center;
     text-align: center;
     padding: 8rem 2rem 4rem;
-    position: relative;
   }
+
+  #heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero > *:not(#heroCanvas) {
+    position: relative;
+    z-index: 2;
+  }
+
   .hero-coords {
     font-size: 0.75rem;
     font-weight: 500;
@@ -159,16 +172,15 @@ STYLE = """
     letter-spacing: 0.15em;
     text-transform: uppercase;
     animation: bounce 2s infinite;
+    z-index: 2;
   }
 
-  /* CONTAINER */
   .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 4rem 1.5rem;
   }
 
-  /* SECTION TITLE */
   .section-label {
     font-size: 0.7rem;
     font-weight: 600;
@@ -185,7 +197,6 @@ STYLE = """
     margin-bottom: 2rem;
   }
 
-  /* CARDS */
   .card {
     background: var(--white);
     border: 1px solid var(--border);
@@ -212,7 +223,6 @@ STYLE = """
     font-size: 0.95rem;
   }
 
-  /* STAT CARD */
   .stat-card {
     background: linear-gradient(135deg, var(--fg) 0%, var(--primary) 100%);
     border-radius: 16px;
@@ -248,7 +258,6 @@ STYLE = """
     line-height: 1.3;
   }
 
-  /* GEO CARD */
   .geo-card {
     background: var(--dark);
     border-radius: 16px;
@@ -274,7 +283,6 @@ STYLE = """
     color: var(--secondary);
   }
 
-  /* CITY GRID */
   .city-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -302,7 +310,6 @@ STYLE = """
   }
   .city-card .city-icon { font-size: 2.25rem; margin-bottom: 0.6rem; }
 
-  /* BUTTONS */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -339,7 +346,6 @@ STYLE = """
   .btn-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
   .back { margin-bottom: 2rem; }
 
-  /* INFO BANNER */
   .info-banner {
     background: linear-gradient(135deg, var(--muted), var(--white));
     border: 1px solid var(--border);
@@ -354,7 +360,6 @@ STYLE = """
     font-size: 0.95rem;
   }
 
-  /* FOOTER */
   footer {
     background: var(--dark);
     color: rgba(255,255,255,0.4);
@@ -365,7 +370,6 @@ STYLE = """
   }
   footer span { color: var(--secondary); font-weight: 600; }
 
-  /* ANIMATIONS */
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -387,8 +391,103 @@ STYLE = """
 </style>
 """
 
+SHADER_JS = """
+<script>
+(function() {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
 
-def page(title, body, nav_links=""):
+  var vs = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+
+  var fs = [
+    'precision highp float;',
+    'uniform float T;',
+    'uniform vec2 R;',
+
+    'float h(vec2 p){',
+    '  return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);',
+    '}',
+
+    'float n(vec2 p){',
+    '  vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);',
+    '  return mix(mix(h(i),h(i+vec2(1,0)),u.x),',
+    '             mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);',
+    '}',
+
+    'float fbm(vec2 p){',
+    '  float v=0.,a=.5;',
+    '  for(int i=0;i<4;i++){v+=a*n(p);p=p*2.1+vec2(1.3*float(i)+.7,1.7*float(i)+.3);a*=.5;}',
+    '  return v;',
+    '}',
+
+    'void main(){',
+    '  vec2 uv=gl_FragCoord.xy/R;',
+    '  float t=T*.1;',
+    '  vec2 q=vec2(fbm(uv*3.+t),fbm(uv*3.+vec2(1.)));',
+    '  vec2 r=vec2(fbm(uv*3.+2.*q+vec2(1.7,9.2)+.15*t),',
+    '              fbm(uv*3.+2.*q+vec2(8.3,2.8)+.126*t));',
+    '  float f=fbm(uv*3.+2.*r);',
+    '  vec3 c1=vec3(.047,.29,.431);',
+    '  vec3 c2=vec3(.055,.647,.914);',
+    '  vec3 c3=vec3(.918,.345,.047);',
+    '  vec3 col=mix(c1,c2,clamp(f*2.+.2,0.,1.));',
+    '  col=mix(col,c3,clamp(f*f*3.-.5,0.,1.));',
+    '  col+=vec3(.05,.1,.18)*clamp(f*f*f*2.,0.,1.);',
+    '  float vig=1.-length((uv-.5)*1.8);',
+    '  col*=smoothstep(0.,1.,vig)*.6+.4;',
+    '  gl_FragColor=vec4(col,.52);',
+    '}'
+  ].join('\\n');
+
+  function sh(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  var aLoc = gl.getAttribLocation(prog, 'a');
+  gl.enableVertexAttribArray(aLoc);
+  gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+  var uT = gl.getUniformLocation(prog, 'T');
+  var uR = gl.getUniformLocation(prog, 'R');
+  var t0 = performance.now();
+
+  function resize() {
+    canvas.width  = Math.floor(canvas.offsetWidth  * .6);
+    canvas.height = Math.floor(canvas.offsetHeight * .6);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  (function loop() {
+    gl.uniform1f(uT, (performance.now() - t0) * .001);
+    gl.uniform2f(uR, canvas.width, canvas.height);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+"""
+
+
+def page(title, body, nav_links="", with_shader=False):
+    shader = SHADER_JS if with_shader else ""
     return f"""<!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -408,6 +507,7 @@ def page(title, body, nav_links=""):
   <footer>
     Proiect SCC 445D &nbsp;&middot;&nbsp; <span>Vlasceanu Mihnea-Stefan</span> &nbsp;&middot;&nbsp; Barcelona
   </footer>
+  {shader}
 </body>
 </html>"""
 
@@ -416,6 +516,7 @@ def page(title, body, nav_links=""):
 def index():
     body = """
     <div class="hero">
+      <canvas id="heroCanvas"></canvas>
       <div class="hero-coords">41.3851° N &nbsp;·&nbsp; 2.1734° E &nbsp;·&nbsp; 12m alt</div>
       <h1>Orase</h1>
       <p class="hero-subtitle">Informatii despre orase din lume</p>
@@ -440,7 +541,7 @@ def index():
       </div>
     </div>
     """
-    return page("Acasa", body)
+    return page("Acasa", body, with_shader=True)
 
 
 @app.route('/orase')
@@ -471,6 +572,7 @@ def barcelona():
     <div class="hero" style="min-height:60vh; background-image:
       linear-gradient(180deg, rgba(12,74,110,0.75) 0%, rgba(14,165,233,0.5) 60%, rgba(234,88,12,0.3) 100%),
       url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80')">
+      <canvas id="heroCanvas"></canvas>
       <div class="hero-coords">41.3851° N &nbsp;·&nbsp; 2.1734° E</div>
       <h1>Barcelona</h1>
       <p class="hero-subtitle">Capitala Cataloniei &nbsp;·&nbsp; Spania</p>
@@ -510,7 +612,7 @@ def barcelona():
       </div>
     </div>
     """
-    return page("Barcelona", body, nav_links='<a href="/barcelona">Barcelona</a>')
+    return page("Barcelona", body, nav_links='<a href="/barcelona">Barcelona</a>', with_shader=True)
 
 
 @app.route('/barcelona/populatie')
