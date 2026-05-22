@@ -12,6 +12,7 @@ COPY pytest.ini pytest.ini
 COPY quickrequirements.txt quickrequirements.txt
 COPY orase.py orase.py
 
+RUN chmod +x dockerstart.sh
 RUN python3 -m venv .venv
 RUN .venv/bin/pip install -r quickrequirements.txt
 
