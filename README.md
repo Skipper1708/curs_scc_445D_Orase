@@ -137,4 +137,4 @@ docker run -d --name orase_container -p 5011:5011 orase_barcelona:latest
 ## Pull Request-uri si review
 | PR | Branch sursa | Branch destinatie | Reviewer | Status |
 |----|-------------|-------------------|----------|--------|
-| #1 | dev_Vlasceanu_Mihnea | main_Vlasceanu_Mihnea | coleg | Aprobat |
+| #1 | dev_Vlasceanu_Mihnea | main_Vlasceanu_Mihnea | Sirbu Rares | Aprobat |
