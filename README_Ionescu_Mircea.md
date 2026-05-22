@@ -114,10 +114,6 @@ Acceseaza din browser: `http://localhost:5011`
 
 ![Site Las Vegas](screenshots_index/Ionescu_Mircea/site_las_vegas.png)
 
-**docker logs orase_container — loguri:**
-
-![Docker Logs](screenshots_index/Ionescu_Mircea/docker_logs.png)
-
 ---
 
 ## 6. PR-uri la care am facut review
