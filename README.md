@@ -291,11 +291,7 @@ Rezultate obținute:
 
 #### Build reușit în Jenkins
 
-![jenkins build success](docs/imagini/jenkins_build_success.png)
-
-#### Console Output Jenkins
-
-![jenkins console output](docs/imagini/jenkins_console_output.png)
+![jenkins build success](docs/imagini/jenkins_build_succes.png)
 
 ---
 
@@ -448,11 +444,7 @@ Am participat la procesul de code review în cadrul proiectului de grupă.
 
 ### Jenkins build success
 
-![jenkins build success](docs/imagini/jenkins_build_success.png)
-
-### Jenkins console output
-
-![jenkins console output](docs/imagini/jenkins_console_output.png)
+![jenkins build success](docs/imagini/jenkins_build_succes.png)
 
 ---
 
