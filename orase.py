@@ -83,23 +83,9 @@ STYLE = """
     font-weight: 500;
     letter-spacing: .03em;
     padding: .3rem 0;
-    position: relative;
-    transition: color 150ms ease, text-shadow 250ms ease;
+    transition: color 150ms ease;
   }
-  nav a:not(.nav-logo)::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0;
-    width: 0; height: 1.5px;
-    background: var(--pri);
-    border-radius: 999px;
-    transition: width 250ms cubic-bezier(0.16,1,0.3,1);
-  }
-  nav a:not(.nav-logo):hover {
-    color: var(--text);
-    text-shadow: 0 0 14px rgba(56,189,248,0.5);
-  }
-  nav a:not(.nav-logo):hover::after { width: 100%; }
+  nav a:not(.nav-logo):hover { color: var(--text); }
 
   .hero {
     position: relative;
@@ -477,22 +463,6 @@ STYLE = """
   .ft-soc { width: 34px; height: 34px; border: 1px solid var(--bd); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; transition: border-color 150ms ease, color 150ms ease, transform 150ms cubic-bezier(0.16,1,0.3,1); }
   .ft-soc:hover { border-color: var(--bd-h); color: var(--text); transform: translateY(-2px); }
 
-  #cursor { display: none; }
-  @media (hover: hover) and (pointer: fine) {
-    #cursor {
-      display: block;
-      position: fixed;
-      width: 28px; height: 28px;
-      border: 1.5px solid var(--pri);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      left: -100px; top: -100px;
-      transform: translate(-50%, -50%);
-      transition: width 180ms ease, height 180ms ease, border-color 180ms ease;
-    }
-  }
-
   @media (prefers-reduced-motion: no-preference) {
     .sr {
       opacity: 0;
@@ -611,28 +581,7 @@ MOTION_JS = """
 </script>
 """
 
-CURSOR_JS = """
-<script>
-(function(){
-  var cur=document.getElementById('cursor');
-  if(!cur)return;
-  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
-  var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y;
-  document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;});
-  (function tick(){
-    x+=(tx-x)*.14;y+=(ty-y)*.14;
-    cur.style.left=x+'px';cur.style.top=y+'px';
-    requestAnimationFrame(tick);
-  })();
-  document.addEventListener('mousedown',function(){cur.style.width='18px';cur.style.height='18px';cur.style.background='rgba(56,189,248,.12)';});
-  document.addEventListener('mouseup',function(){cur.style.width='28px';cur.style.height='28px';cur.style.background='transparent';});
-  document.querySelectorAll('a,button').forEach(function(el){
-    el.addEventListener('mouseenter',function(){cur.style.width='42px';cur.style.height='42px';cur.style.borderColor='var(--acc)';});
-    el.addEventListener('mouseleave',function(){cur.style.width='28px';cur.style.height='28px';cur.style.borderColor='var(--pri)';});
-  });
-})();
-</script>
-"""
+CURSOR_JS = ""
 
 
 def page(title, body, nav_links="", shader=False, motion=False):
@@ -645,7 +594,6 @@ def page(title, body, nav_links="", shader=False, motion=False):
   {STYLE}
 </head>
 <body>
-  <div id="cursor"></div>
   <nav>
     <a class="nav-logo" href="/">{_GLB} Orase</a>
     <a href="/">Acasa</a>
