@@ -80,8 +80,36 @@ docker build -t orase_viena_urmuz .
 docker run -d --name container_viena -p 8020:5011 orase_viena_urmuz
 ```
 Acces din browser: http://127.0.0.1:8020
+## Screenshots
+
+
+### Docker logs
+<img width="975" height="691" alt="image" src="https://github.com/user-attachments/assets/51f4e00c-8fa7-495f-bbfa-102b3fecc929" />
+
+### Teste pytest - PASSED
+<img width="975" height="633" alt="image" src="https://github.com/user-attachments/assets/065ce8c6-0479-465e-ac36-801b07b6cc30" />
+
+### Docker container running
+<img width="975" height="362" alt="image" src="https://github.com/user-attachments/assets/0a6d98ec-9794-432f-94ab-662a543c7296" />
+
+
+### Aplicatie in browser din container
+<img width="975" height="690" alt="image" src="https://github.com/user-attachments/assets/90c53ee4-e520-4cfd-aac6-d50389ec6dd8" />
+
+### Jenkins - Configurare
+<img width="975" height="628" alt="image" src="https://github.com/user-attachments/assets/abf3b295-1599-4668-b51b-d4d01f865190" />
+
+### Jenkins Pipeline - SUCCESS
+<img width="975" height="530" alt="image" src="https://github.com/user-attachments/assets/70e9fd71-be7b-4b65-b1c1-17f7a5346579" />
+
+### Docker images
+<img width="975" height="628" alt="image" src="https://github.com/user-attachments/assets/46263055-8c02-4114-aff4-53c88f3bb248" />
+
+### Docker logs
+<img width="975" height="384" alt="image" src="https://github.com/user-attachments/assets/06f8d018-7982-4211-ac14-24d2e1bce000" />
+
 
 ## Pull Request-uri si review
 - PR creat: dev_Urmuz_Laurentiu → main_Urmuz_Laurentiu
 - Review: in asteptare
-- Status: in lucru
+- Status: in lucru 
