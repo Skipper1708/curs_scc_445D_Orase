@@ -84,11 +84,11 @@ Returneaza un string cu o descriere a orasului Como, Italia.
 ```bash
 python3 orase.py
 ```
-![Pagina start](screenshots/como_pagina_start.png)
-![Pagina orase](screenshots/como_orase.png)
-![Pagina como](screenshots/como_info.png)
-![Populatie](screenshots/como_populatie.png)
-![Descriere](screenshots/como_descriere.png)
+![Pagina start](screenshots_index/Lambru_Adina/como_pagina_start.png)
+![Pagina orase](screenshots_index/Lambru_Adina/como_orase.png)
+![Pagina como](screenshots_index/Lambru_Adina/como_info.png)
+![Populatie](screenshots_index/Lambru_Adina/como_populatie.png)
+![Descriere](screenshots_index/Lambru_Adina/como_descriere.png)
 
 ### Rulare teste
 ```bash
@@ -98,7 +98,7 @@ python3 -m pytest app/teste/test_como.py -v
 ## Rezultatele testarii
 Toate testele trec cu succes (PASSED).
 
-![Teste reusit](screenshots/teste_reusite.png)
+![Teste reusit](screenshots_index/Lambru_Adina/teste_reusite.png)
 
 ## Integrare Git si GitHub
 - Branch dezvoltare: `dev_Lambru_Adina`
@@ -112,14 +112,14 @@ Pipeline cu 3 stagii:
 - **Test** - rulare unit tests cu pytest
 - **Deploy** - creare si pornire container Docker
 - 
-![Jenkins pipeline](screenshots/jenkins_pipeline.png)
+![Jenkins pipeline](screenshots_index/Lambru_Adina/jenkins_pipeline.png)
 
 ## Containerizare Docker
 ```bash
 docker build -t como-app .
 docker run -p 5000:5000 como-app
 ```
-![Jenkins status](screenshots/docker_terminal.png)
+![Jenkins status](screenshots_index/Lambru_Adina/docker_terminal.png)
 
 ## Pull Request-uri si review
 | PR | Branch sursa | Branch destinatie | Reviewer | Status |

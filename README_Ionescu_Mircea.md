@@ -58,11 +58,11 @@ pytest app/tests/ -v
 
 **Screenshot Jenkins PASS — Blue Ocean:**
 
-![Jenkins Pipeline PASS](screenshots/jenkins_pass.png)
+![Jenkins Pipeline PASS](screenshots_index/Ionescu_Mircea/jenkins_pass.png)
 
 **Screenshot Jenkins Console — Finished: SUCCESS:**
 
-![Jenkins Console SUCCESS](screenshots/jenkins_console.png)
+![Jenkins Console SUCCESS](screenshots_index/Ionescu_Mircea/jenkins_console.png)
 
 ---
 
@@ -104,19 +104,19 @@ Acceseaza din browser: `http://localhost:5011`
 
 **docker images — imaginea creata:**
 
-![Docker Images](screenshots/docker_images.png)
+![Docker Images](screenshots_index/Ionescu_Mircea/docker_images.png)
 
 **docker ps — containerul pornit:**
 
-![Docker PS](screenshots/docker_ps.png)
+![Docker PS](screenshots_index/Ionescu_Mircea/docker_ps.png)
 
 **Browser — aplicatie accesata din container:**
 
-![Site Las Vegas](screenshots/site_las_vegas.png)
+![Site Las Vegas](screenshots_index/Ionescu_Mircea/site_las_vegas.png)
 
 **docker logs orase_container — loguri:**
 
-![Docker Logs](screenshots/docker_logs.png)
+![Docker Logs](screenshots_index/Ionescu_Mircea/docker_logs.png)
 
 ---
 

@@ -62,25 +62,25 @@ curs_scc_445D_Orase/
 ## Screenshots
 
 ### Aplicatia principala
-![Aplicatie](screenshots/aplicatie.png)
+![Aplicatie](screenshots_index/Pirvu_Alina/aplicatie.png)
 
 ### Pagina Orase
-![Orase](screenshots/orase.png)
+![Orase](screenshots_index/Pirvu_Alina/orase.png)
 
 ### Pagina Lisabona
-![Lisabona](screenshots/lisabona.png)
+![Lisabona](screenshots_index/Pirvu_Alina/lisabona.png)
 
 ### Populatia Lisabonei
-![Populatie](screenshots/lisabona-populatie.png)
+![Populatie](screenshots_index/Pirvu_Alina/lisabona-populatie.png)
 
 ### Descriere Lisabona
-![Descriere](screenshots/lisabona-descriere.png)
+![Descriere](screenshots_index/Pirvu_Alina/lisabona-descriere.png)
 
 ### Jenkins Pipeline
-![Jenkins](screenshots/jenkins.png)
+![Jenkins](screenshots_index/Pirvu_Alina/jenkins.png)
 
 ### Docker
-![Docker](screenshots/docker.png)
+![Docker](screenshots_index/Pirvu_Alina/docker.png)
 
 ## Functionalitatea implementata
 Am implementat o aplicatie web Flask pentru tema Orase, avand ca element ales orasul Lisabona.

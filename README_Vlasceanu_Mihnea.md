@@ -93,8 +93,8 @@ export FLASK_APP=orase
 flask run --host=0.0.0.0 --port=5011
 ```
 
-![Pagina start](screenshots/site_root.jpeg)
-![Pagina barcelona](screenshots/site_barcelona.jpeg)
+![Pagina start](screenshots_index/Vlasceanu_Mihnea/site_root.jpeg)
+![Pagina barcelona](screenshots_index/Vlasceanu_Mihnea/site_barcelona.jpeg)
 
 ### Rulare teste
 ```bash
@@ -105,7 +105,7 @@ pytest app/tests/test_lib_orase.py -v
 ## Rezultatele testarii
 Toate testele trec cu succes (PASSED).
 
-![Teste reusite](screenshots/teste_jenkins.jpeg)
+![Teste reusite](screenshots_index/Vlasceanu_Mihnea/teste_jenkins.jpeg)
 
 ## Integrare Git si GitHub
 - Branch dezvoltare: `dev_Vlasceanu_Mihnea`
@@ -120,7 +120,7 @@ Pipeline cu 4 stagii:
 - **Testare** - rulare unit tests cu pytest
 - **Deploy** - creare si pornire container Docker
 
-![Jenkins pipeline](screenshots/teste_jenkins.jpeg)
+![Jenkins pipeline](screenshots_index/Vlasceanu_Mihnea/teste_jenkins.jpeg)
 
 ## Containerizare Docker
 ```bash
@@ -130,9 +130,9 @@ docker rm orase_container || true
 docker run -d --name orase_container -p 5011:5011 orase_barcelona:latest
 ```
 
-![Docker images](screenshots/imagini.jpeg)
-![Docker container](screenshots/container.jpeg)
-![Docker logs](screenshots/logs.jpeg)
+![Docker images](screenshots_index/Vlasceanu_Mihnea/imagini.jpeg)
+![Docker container](screenshots_index/Vlasceanu_Mihnea/container.jpeg)
+![Docker logs](screenshots_index/Vlasceanu_Mihnea/logs.jpeg)
 
 ## Pull Request-uri si review
 | PR | Branch sursa | Branch destinatie | Reviewer | Status |

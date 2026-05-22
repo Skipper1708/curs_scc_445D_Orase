@@ -320,10 +320,10 @@ Pipeline-ul executat în Jenkins a conținut următoarele etape:
 ### Capturi Jenkins
 
 #### 1. Build reușit în Jenkins
-![jenkins build success](docs/imagini/jenkins_build_succes.png)
+![jenkins build success](screenshots_index/Rezus_Catalin/jenkins_build_succes.png)
 
 #### 2. Console Output cu testele trecute
-![jenkins console output](docs/imagini/jenkins_console_output.png)
+![jenkins console output](screenshots_index/Rezus_Catalin/jenkins_console_output.png)
 
 > **Notă:** capturile Jenkins vor fi adăugate după rularea finală a pipeline-ului.
 
@@ -364,20 +364,20 @@ Conform cerințelor proiectului, au fost realizate și adăugate în documentaț
 6. Console Output din Jenkins cu rezultatul testelor
 
 ### 1. Imaginea Docker creată
-![docker images](docs/imagini/docker_images.png)
+![docker images](screenshots_index/Rezus_Catalin/docker_images.png)
 
 Imaginea `orase_sarajevo:latest` a fost construită cu succes (157MB, ID: db3e40434c94).
 
 ### 2. Containerul pornit
-![docker ps](docs/imagini/docker_ps.png)
+![docker ps](screenshots_index/Rezus_Catalin/docker_ps.png)
 
 Containerul `orase_container` rulează pe portul `5011`, status `Up`.
 
 ### 3. Browserul care accesează aplicația din container
-![browser aplicatie](docs/imagini/browser_sarajevo.png)
+![browser aplicatie](screenshots_index/Rezus_Catalin/browser_sarajevo.png)
 
 ### 4. Logurile containerului
-![docker logs](docs/imagini/docker_logs.png)
+![docker logs](screenshots_index/Rezus_Catalin/docker_logs.png)
 
 Flask servește corect toate rutele implementate — toate returnează status `200`.
 

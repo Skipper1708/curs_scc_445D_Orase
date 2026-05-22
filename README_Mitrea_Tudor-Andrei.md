@@ -81,22 +81,22 @@ Configurare `.venv` și instalare pachete.
     * Running on http://0.0.0.0:5011
     Press CTRL+C to quit
 
-![image](screenshots/manchester_activare_venv.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_activare_venv.png)
 
 # Exemple pagina web
 [cuprins](#cuprins)
 
 ## Pagina principala
-![image](screenshots/manchester_home.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_home.png)
 
 ## Pagina - Descriere
-![image](screenshots/manchester_descriere.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_descriere.png)
 
 ## Pagina - Populatie
-![image](screenshots/manchester_populatie.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_populatie.png)
 
 ## Pagina - Monumente
-![image](screenshots/manchester_monumente.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_monumente.png)
 
 # Testare cu pytest
 [cuprins](#cuprins)
@@ -109,7 +109,7 @@ Execuția testelor se face din directorul rădăcină folosind comanda:
 (.venv) tusu@tusu-VirtualBox:~/Desktop/curs_scc_445D_Orase$ pytest app/tests/ -v
 ```
 Testele au fost rulate local cu succes folosind pytest:
-![image](screenshots/manchester_pytest.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_pytest.png)
 
 # Verificare statica cu pylint
 [cuprins](#cuprins)
@@ -130,11 +130,11 @@ Pentru verificarea calității codului sursă se utilizează pachetul **pylint**
 Aplicația a fost containerizată folosind o imagine de Python 3.10-alpine. Containerul este configurat să ruleze procesul Flask pe portul intern **5011**.
 docker build -t orase_manchester:latest . este comanda pentru creare.
 
-![image](screenshots/docker.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/docker.png)
 
 ## Accesare aplicație din browser:
 Aplicația poate fi accesată local la adresa http://localhost:8020 sau direct prin IP-ul intern alocat de Docker http://172.17.0.2:5011.
-![image](screenshots/manchester_docker.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/manchester_docker.png)
 
 Pentru oprirea și eliminarea containerului, se utilizează următoarele comenzi:
  * **Oprire**: `docker stop test-manchester`
@@ -158,7 +158,7 @@ Daca folositi masina virtuala linux, restartati masina dupa ce faceti configurat
 3. **Unit Tests**: Rularea testelor cu `pytest`.
 4. **Deploy**: Construirea imaginii Docker și pornirea containerului pe portul **8020**.
 
-![image](screenshots/jenkins.png)
+![image](screenshots_index/Mitrea_Tudor-Andrei/jenkins.png)
 
 Aplicația poate fi accesată după finalizarea pipeline-ului la adresa: `http://localhost:8020/`
 

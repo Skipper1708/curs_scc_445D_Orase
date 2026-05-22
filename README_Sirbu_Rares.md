@@ -65,7 +65,7 @@ pytest app/tests/ -v
 
 **Screenshot Jenkins PASS:**
 
-![Jenkins PASS](screenshots/jenkins_pass.png)
+![Jenkins PASS](screenshots_index/Sirbu_Rares/jenkins_pass.png)
 
 ---
 
@@ -111,19 +111,19 @@ docker logs orase_container
 
 **docker images:**
 
-![docker images](screenshots/docker_images.png)
+![docker images](screenshots_index/Sirbu_Rares/docker_images.png)
 
 **docker ps:**
 
-![docker ps](screenshots/docker_ps.png)
+![docker ps](screenshots_index/Sirbu_Rares/docker_ps.png)
 
 **Aplicatie in browser:**
 
-![browser](screenshots/browser.png)
+![browser](screenshots_index/Sirbu_Rares/browser.png)
 
 **docker logs:**
 
-![docker logs](screenshots/docker_logs.png)
+![docker logs](screenshots_index/Sirbu_Rares/docker_logs.png)
 
 ---
 

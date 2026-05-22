@@ -306,7 +306,7 @@ Comenzi Git importante folosite:
 
 Pull Request creat din branch-ul `dev_paunoiu_ianis` către branch-ul `main_paunoiu_ianis`, cu reviewer adăugat.
 
-![Pull Request GitHub](screenshots/github-pull-req.png)
+![Pull Request GitHub](screenshots_index/paunoiu_ianis/github-pull-req.png)
 
 ---
 
@@ -314,7 +314,7 @@ Pull Request creat din branch-ul `dev_paunoiu_ianis` către branch-ul `main_paun
 
 Pipeline-ul Jenkins a rulat cu succes. În consola Jenkins se poate observa rezultatul final `Finished: SUCCESS`.
 
-![Jenkins Console Output](screenshots/console.png)
+![Jenkins Console Output](screenshots_index/paunoiu_ianis/console.png)
 
 ---
 
@@ -322,7 +322,7 @@ Pipeline-ul Jenkins a rulat cu succes. În consola Jenkins se poate observa rezu
 
 Aplicația Flask rulează în browser pe adresa `http://192.168.64.2:5011`.
 
-![Aplicație browser](screenshots/app-ui.png)
+![Aplicație browser](screenshots_index/paunoiu_ianis/app-ui.png)
 
 ---
 
@@ -330,7 +330,7 @@ Aplicația Flask rulează în browser pe adresa `http://192.168.64.2:5011`.
 
 Imaginea Docker `orase-paunoiu-ianis:latest` a fost creată cu succes.
 
-![Docker images](screenshots/docker-images.png)
+![Docker images](screenshots_index/paunoiu_ianis/docker-images.png)
 
 ---
 
@@ -338,7 +338,7 @@ Imaginea Docker `orase-paunoiu-ianis:latest` a fost creată cu succes.
 
 Containerul `container-orase-paunoiu-ianis` rulează și expune portul `5011`.
 
-![Docker ps](screenshots/docker-ps.png)
+![Docker ps](screenshots_index/paunoiu_ianis/docker-ps.png)
 
 ---
 

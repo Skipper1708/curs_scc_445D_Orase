@@ -169,19 +169,19 @@ Interfata a fost structurata ca un mini-dashboard pentru orasul Paris:
 
 Pagina temei Orase:
 
-![Tema Orase](screenshots/orase-home.png)
+![Tema Orase](screenshots_index/Szabo_Daria/orase-home.png)
 
 Pagina principala Paris:
 
-![Paris Home](screenshots/paris-home.png)
+![Paris Home](screenshots_index/Szabo_Daria/paris-home.png)
 
 Descriere Paris:
 
-![Descriere Paris](screenshots/paris-descriere.png)
+![Descriere Paris](screenshots_index/Szabo_Daria/paris-descriere.png)
 
 Obiective Paris:
 
-![Obiective Paris](screenshots/paris-obiective.png)
+![Obiective Paris](screenshots_index/Szabo_Daria/paris-obiective.png)
 
 ---
 
@@ -255,7 +255,7 @@ Aceasta rulare confirma faptul ca testele unitare trec in Jenkins.
 
 Captura Jenkins:
 
-![Jenkins Success](screenshots/jenkins-success.png)
+![Jenkins Success](screenshots_index/Szabo_Daria/jenkins-success.png)
 
 ---
 
@@ -276,23 +276,23 @@ Pentru containerizare au fost verificate urmatoarele:
 
 Imagine Docker creata:
 
-![Docker images](screenshots/docker-images.png)
+![Docker images](screenshots_index/Szabo_Daria/docker-images.png)
 
 Container creat si pornit:
 
-![Docker ps](screenshots/docker-ps.png)
+![Docker ps](screenshots_index/Szabo_Daria/docker-ps.png)
 
 Browser care acceseaza aplicatia rulata in container:
 
-![Paris Home](screenshots/paris-home.png)
+![Paris Home](screenshots_index/Szabo_Daria/paris-home.png)
 
-![Descriere Paris](screenshots/paris-descriere.png)
+![Descriere Paris](screenshots_index/Szabo_Daria/paris-descriere.png)
 
-![Obiective Paris](screenshots/paris-obiective.png)
+![Obiective Paris](screenshots_index/Szabo_Daria/paris-obiective.png)
 
 Mesajele din consola containerului:
 
-![Docker logs](screenshots/docker-logs.png)
+![Docker logs](screenshots_index/Szabo_Daria/docker-logs.png)
 
 ---
 

@@ -291,7 +291,7 @@ Rezultate obținute:
 
 #### Build reușit în Jenkins
 
-![jenkins build success](docs/imagini/jenkins_build_succes.png)
+![jenkins build success](screenshots_index/Ioana_Delia/jenkins_build_succes.png)
 
 ---
 
@@ -428,23 +428,23 @@ Am participat la procesul de code review în cadrul proiectului de grupă.
 
 ### Imaginea Docker creată
 
-![docker images](docs/imagini/docker_images.png)
+![docker images](screenshots_index/Ioana_Delia/docker_images.png)
 
 ### Containerul creat pe baza imaginii
 
-![docker ps](docs/imagini/docker_ps.png)
+![docker ps](screenshots_index/Ioana_Delia/docker_ps.png)
 
 ### Browserul care accesează aplicația rulată în container
 
-![browser aplicatie](docs/imagini/browser_varsovia.png)
+![browser aplicatie](screenshots_index/Ioana_Delia/browser_varsovia.png)
 
 ### Mesajele afișate în consola containerului
 
-![docker logs](docs/imagini/docker_logs.png)
+![docker logs](screenshots_index/Ioana_Delia/docker_logs.png)
 
 ### Jenkins build success
 
-![jenkins build success](docs/imagini/jenkins_build_succes.png)
+![jenkins build success](screenshots_index/Ioana_Delia/jenkins_build_succes.png)
 
 ---
 

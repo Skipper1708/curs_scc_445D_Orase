@@ -318,11 +318,11 @@ Rezultate obținute:
 
 #### Build reușit în Jenkins
 
-![jenkins build success](docs/imagini/jenkins_build_success.png)
+![jenkins build success](screenshots_index/ruxandra_apostol/jenkins_build_success.png)
 
 #### Console Output Jenkins
 
-![jenkins console output](docs/imagini/jenkins_console_output.png)
+![jenkins console output](screenshots_index/ruxandra_apostol/jenkins_console_output.png)
 
 ---
 
@@ -465,27 +465,27 @@ Am participat la procesul de code review în cadrul proiectului de grupă.
 
 ### Imaginea Docker creată
 
-![docker images](docs/imagini/docker_images.png)
+![docker images](screenshots_index/ruxandra_apostol/docker_images.png)
 
 ### Containerul creat pe baza imaginii
 
-![docker ps](docs/imagini/docker_ps_a.png)
+![docker ps](screenshots_index/ruxandra_apostol/docker_ps_a.png)
 
 ### Browserul care accesează aplicația rulată în container
 
-![browser aplicatie](docs/imagini/browser_reykjavik.png)
+![browser aplicatie](screenshots_index/ruxandra_apostol/browser_reykjavik.png)
 
 ### Mesajele afișate în consola containerului
 
-![docker logs](docs/imagini/docker_logs.png)
+![docker logs](screenshots_index/ruxandra_apostol/docker_logs.png)
 
 ### Jenkins build success
 
-![jenkins build success](docs/imagini/jenkins_build_success.png)
+![jenkins build success](screenshots_index/ruxandra_apostol/jenkins_build_success.png)
 
 ### Jenkins console output
 
-![jenkins console output](docs/imagini/jenkins_console_output.png)
+![jenkins console output](screenshots_index/ruxandra_apostol/jenkins_console_output.png)
 
 ---
 
