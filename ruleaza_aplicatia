@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. ./activeaza_venv
+
+export FLASK_APP=orase
+
+echo "Pornire aplicatie pe http://0.0.0.0:5011"
+flask run --host=0.0.0.0 --port=5011
