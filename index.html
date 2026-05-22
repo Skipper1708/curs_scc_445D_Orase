@@ -13,6 +13,7 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
+
     header {
       text-align: center;
       padding: 4rem 1.5rem 2.5rem;
@@ -38,52 +39,81 @@
       margin-bottom: .6rem;
     }
     h1 span { color: #38bdf8; }
-    .sub {
-      font-size: .9rem;
-      color: rgba(238,244,255,.5);
-    }
+    .sub { font-size: .9rem; color: rgba(238,244,255,.5); }
+
     main {
-      max-width: 960px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 3rem 1.5rem 5rem;
-    }
-    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
     }
+
     .card {
       background: #0f1829;
       border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 14px;
-      padding: 1.75rem 1.25rem 1.5rem;
+      border-radius: 16px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: .6rem;
       transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
     }
     .card:hover {
-      border-color: rgba(56,189,248,.4);
+      border-color: rgba(56,189,248,.35);
       transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+      box-shadow: 0 10px 36px rgba(0,0,0,.45);
     }
-    .flag { font-size: 2.25rem; line-height: 1; }
-    .city {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #eef4ff;
+
+    .card-head {
+      padding: 1.25rem 1.25rem .75rem;
+      display: flex;
+      align-items: center;
+      gap: .85rem;
     }
-    .name {
+    .flag { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+    .card-meta { flex: 1; min-width: 0; }
+    .city { font-size: 1.05rem; font-weight: 700; color: #eef4ff; }
+    .name { font-size: .75rem; color: rgba(238,244,255,.45); margin-top: .1rem; }
+
+    .gallery {
+      display: flex;
+      gap: .5rem;
+      overflow-x: auto;
+      padding: 0 1.25rem .75rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(56,189,248,.3) transparent;
+    }
+    .gallery::-webkit-scrollbar { height: 4px; }
+    .gallery::-webkit-scrollbar-track { background: transparent; }
+    .gallery::-webkit-scrollbar-thumb { background: rgba(56,189,248,.3); border-radius: 999px; }
+
+    .thumb {
+      flex-shrink: 0;
+      width: 130px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.07);
+      cursor: pointer;
+      transition: border-color 150ms ease, opacity 150ms ease;
+    }
+    .thumb:hover { border-color: rgba(56,189,248,.5); opacity: .9; }
+
+    .no-photos {
+      padding: 0 1.25rem .75rem;
       font-size: .78rem;
-      color: rgba(238,244,255,.5);
-      font-weight: 400;
+      color: rgba(238,244,255,.3);
+      font-style: italic;
+    }
+
+    .card-foot {
+      padding: .75rem 1.25rem 1.25rem;
+      margin-top: auto;
     }
     .btn {
       display: inline-block;
-      margin-top: .5rem;
-      padding: .5rem 1.25rem;
+      padding: .5rem 1.2rem;
       background: #0ea5e9;
       color: #fff;
       text-decoration: none;
@@ -93,6 +123,41 @@
       transition: background 150ms ease;
     }
     .btn:hover { background: #38bdf8; }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.7);
+    }
+    .lb-close {
+      position: fixed;
+      top: 1.25rem; right: 1.25rem;
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.1);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 150ms ease;
+    }
+    .lb-close:hover { background: rgba(255,255,255,.2); }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -100,96 +165,272 @@
       color: rgba(238,244,255,.25);
       border-top: 1px solid rgba(255,255,255,0.06);
     }
+
     @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr 1fr; }
+      main { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="badge">Grupa 445D</div>
-    <h1>Proiect <span>Orase</span> SCC</h1>
-    <p class="sub">Servicii Cloud si Containerizare &mdash; README-urile studentilor</p>
-  </header>
-  <main>
-    <div class="grid">
-      <div class="card">
-        <div class="flag">&#127467;&#127479;</div>
+
+<header>
+  <div class="badge">Grupa 445D</div>
+  <h1>Proiect <span>Orase</span> SCC</h1>
+  <p class="sub">Servicii Cloud si Containerizare &mdash; screenshoturi si README-uri</p>
+</header>
+
+<main>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127467;&#127479;</div>
+      <div class="card-meta">
         <div class="city">Paris</div>
         <div class="name">Szabo Daria</div>
-        <a href="README_Szabo_Daria.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127466;&#127480;</div>
-        <div class="city">Barcelona</div>
-        <div class="name">Vlasceanu Mihnea</div>
-        <a href="README_Vlasceanu_Mihnea.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127470;&#127481;</div>
-        <div class="city">Roma</div>
-        <div class="name">Sirbu Rares</div>
-        <a href="README_Sirbu_Rares.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127477;&#127481;</div>
-        <div class="city">Lisabona</div>
-        <div class="name">Pirvu Alina</div>
-        <a href="README_Pirvu_Alina.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127463;&#127462;</div>
-        <div class="city">Sarajevo</div>
-        <div class="name">Rezus Catalin</div>
-        <a href="README_Rezus_Catalin.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127479;&#127476;</div>
-        <div class="city">Bucuresti</div>
-        <div class="name">Paunoiu Ianis</div>
-        <a href="README_paunoiu_ianis.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127477;&#127473;</div>
-        <div class="city">Varsovia</div>
-        <div class="name">Ioana Delia</div>
-        <a href="README_Ioana_Delia.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127482;&#127480;</div>
-        <div class="city">Las Vegas</div>
-        <div class="name">Ionescu Mircea</div>
-        <a href="README_Ionescu_Mircea.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127470;&#127481;</div>
-        <div class="city">Como</div>
-        <div class="name">Lambru Adina</div>
-        <a href="README_Lambru_Adina.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127468;&#127463;</div>
-        <div class="city">Manchester</div>
-        <div class="name">Mitrea Tudor-Andrei</div>
-        <a href="README_Mitrea_Tudor-Andrei.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127462;&#127481;</div>
-        <div class="city">Viena</div>
-        <div class="name">Urmuz Laurentiu</div>
-        <a href="README_Urmuz_Laurentiu.md" class="btn">Vezi README</a>
-      </div>
-      <div class="card">
-        <div class="flag">&#127470;&#127480;</div>
-        <div class="city">Reykjavik</div>
-        <div class="name">Ruxandra Apostol</div>
-        <a href="README_ruxandra_apostol.md" class="btn">Vezi README</a>
       </div>
     </div>
-  </main>
-  <footer>
-    &copy; <span id="yr"></span> Grupa 445D &mdash; Servicii Cloud si Containerizare
-  </footer>
-  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/paris-home.png" alt="paris-home" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/orase-home.png" alt="orase-home" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/paris-obiective.png" alt="obiective" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/paris-descriere.png" alt="descriere" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/jenkins-success.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/docker-images.png" alt="docker" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/docker-logs.png" alt="docker logs" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Szabo_Daria/docker-ps.png" alt="docker ps" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Szabo_Daria.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127466;&#127480;</div>
+      <div class="card-meta">
+        <div class="city">Barcelona</div>
+        <div class="name">Vlasceanu Mihnea</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Vlasceanu_Mihnea/site_root.jpeg" alt="site root" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Vlasceanu_Mihnea/site_barcelona.jpeg" alt="barcelona" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Vlasceanu_Mihnea/teste_jenkins.jpeg" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Vlasceanu_Mihnea/imagini.jpeg" alt="docker imagini" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Vlasceanu_Mihnea/container.jpeg" alt="container" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Vlasceanu_Mihnea/logs.jpeg" alt="logs" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Vlasceanu_Mihnea.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127470;&#127481;</div>
+      <div class="card-meta">
+        <div class="city">Roma</div>
+        <div class="name">Sirbu Rares</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Sirbu_Rares/browser.png" alt="browser" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Sirbu_Rares/jenkins_pass.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Sirbu_Rares/docker_images.png" alt="docker images" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Sirbu_Rares/docker_logs.png" alt="docker logs" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Sirbu_Rares/docker_ps.png" alt="docker ps" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Sirbu_Rares.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127477;&#127481;</div>
+      <div class="card-meta">
+        <div class="city">Lisabona</div>
+        <div class="name">Pirvu Alina</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/aplicatie.png" alt="aplicatie" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/lisabona.png" alt="lisabona" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/lisabona-populatie.png" alt="populatie" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/lisabona-descriere.png" alt="descriere" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/orase.png" alt="orase" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/jenkins.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Pirvu_Alina/docker.png" alt="docker" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Pirvu_Alina.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127463;&#127462;</div>
+      <div class="card-meta">
+        <div class="city">Sarajevo</div>
+        <div class="name">Rezus Catalin</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Rezus_Catalin/browser_sarajevo.png" alt="browser" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Rezus_Catalin/jenkins_build_succes.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Rezus_Catalin/jenkins_console_output.png" alt="jenkins console" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Rezus_Catalin/docker_images.png" alt="docker images" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Rezus_Catalin/docker_logs.png" alt="docker logs" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Rezus_Catalin/docker_ps.png" alt="docker ps" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Rezus_Catalin.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127479;&#127476;</div>
+      <div class="card-meta">
+        <div class="city">Bucuresti</div>
+        <div class="name">Paunoiu Ianis</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/paunoiu_ianis/app-ui.png" alt="app ui" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/paunoiu_ianis/console.png" alt="console" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/paunoiu_ianis/docker-images.png" alt="docker images" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/paunoiu_ianis/docker-ps.png" alt="docker ps" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/paunoiu_ianis/github-pull-req.png" alt="pull request" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_paunoiu_ianis.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127477;&#127473;</div>
+      <div class="card-meta">
+        <div class="city">Varsovia</div>
+        <div class="name">Ioana Delia</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Ioana_Delia/browser_varsovia.png" alt="browser" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ioana_Delia/jenkins_build_succes.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ioana_Delia/docker_images.png" alt="docker images" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ioana_Delia/docker_logs.png" alt="docker logs" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ioana_Delia/docker_ps.png" alt="docker ps" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Ioana_Delia.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127482;&#127480;</div>
+      <div class="card-meta">
+        <div class="city">Las Vegas</div>
+        <div class="name">Ionescu Mircea</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Ionescu_Mircea/site_las_vegas.png" alt="site" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ionescu_Mircea/jenkins_pass.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ionescu_Mircea/jenkins_console.png" alt="jenkins console" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ionescu_Mircea/docker_images.png" alt="docker images" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Ionescu_Mircea/docker_ps.png" alt="docker ps" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Ionescu_Mircea.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127470;&#127481;</div>
+      <div class="card-meta">
+        <div class="city">Como</div>
+        <div class="name">Lambru Adina</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/como_pagina_start.png" alt="pagina start" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/como_orase.png" alt="orase" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/como_populatie.png" alt="populatie" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/como_descriere.png" alt="descriere" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/como_info.png" alt="info" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/jenkins_pipeline.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/teste_reusite.png" alt="teste" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/docker_browser.png" alt="docker browser" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/docker_build.png" alt="docker build" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Lambru_Adina/docker_terminal.png" alt="docker terminal" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Lambru_Adina.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127468;&#127463;</div>
+      <div class="card-meta">
+        <div class="city">Manchester</div>
+        <div class="name">Mitrea Tudor-Andrei</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_home.png" alt="home" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_populatie.png" alt="populatie" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_descriere.png" alt="descriere" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_monumente.png" alt="monumente" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/jenkins.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_pytest.png" alt="pytest" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_activare_venv.png" alt="venv" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/manchester_docker.png" alt="docker" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/Mitrea_Tudor-Andrei/docker.png" alt="docker" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_Mitrea_Tudor-Andrei.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127462;&#127481;</div>
+      <div class="card-meta">
+        <div class="city">Viena</div>
+        <div class="name">Urmuz Laurentiu</div>
+      </div>
+    </div>
+    <div class="no-photos">Fara poze disponibile</div>
+    <div class="card-foot"><a href="README_Urmuz_Laurentiu.md" class="btn">Vezi README</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="flag">&#127470;&#127480;</div>
+      <div class="card-meta">
+        <div class="city">Reykjavik</div>
+        <div class="name">Ruxandra Apostol</div>
+      </div>
+    </div>
+    <div class="gallery">
+      <img class="thumb" src="screenshots_index/ruxandra_apostol/browser_reykjavik.png" alt="browser" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/ruxandra_apostol/jenkins_build_success.png" alt="jenkins" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/ruxandra_apostol/jenkins_console_output.png" alt="jenkins console" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/ruxandra_apostol/docker_images.png" alt="docker images" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/ruxandra_apostol/docker_logs.png" alt="docker logs" onclick="lb(this)">
+      <img class="thumb" src="screenshots_index/ruxandra_apostol/docker_ps_a.png" alt="docker ps" onclick="lb(this)">
+    </div>
+    <div class="card-foot"><a href="README_ruxandra_apostol.md" class="btn">Vezi README</a></div>
+  </div>
+
+</main>
+
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">&#10005;</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<footer>
+  &copy; <span id="yr"></span> Grupa 445D &mdash; Servicii Cloud si Containerizare
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  function lb(img) {
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb').classList.add('open');
+  }
+  function closeLb() {
+    document.getElementById('lb').classList.remove('open');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLb();
+  });
+</script>
 </body>
 </html>
