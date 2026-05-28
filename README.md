@@ -238,10 +238,12 @@ Job-ul Jenkins a fost configurat sa preia codul din repository-ul GitHub de pe b
 
     dev_Szabo_Daria
 
-Pipeline-ul foloseste fisierul `Jenkinsfile` si are doua etape:
+Pipeline-ul foloseste fisierul `Jenkinsfile` si are urmatoarele etape:
 
-- `Install dependencies`
-- `Run tests`
+- `Build`
+- `Calitate Cod`
+- `Testare`
+- `Deploy`
 
 Rezultatul rularii Jenkins a fost:
 
@@ -391,15 +393,17 @@ Pull Request pentru integrarea functionalitatii Paris:
 
 | Camp | Valoare |
 |------|---------|
+| PR | #2 - Adauga functionalitate pentru orasul Paris |
 | Source | dev_Szabo_Daria |
 | Destination | main_Szabo_Daria |
-| Status | urmeaza sa fie creat / in asteptare review |
+| Status | merged |
+| Review | review primit si aprobat |
 
-Review la Pull Request-ul unui coleg:
+Review realizat la Pull Request-ul unui coleg:
 
 | PR | Status |
 |----|--------|
-| PR #... | urmeaza sa fie completat dupa realizarea review-ului |
+| PR #15 - Add README Varsovia - Ioana_Delia | review realizat si aprobat |
 
 Aceasta sectiune va fi actualizata dupa crearea PR-ului propriu si dupa realizarea review-ului la PR-ul unui coleg.
 
@@ -440,6 +444,7 @@ Acesta include:
 | Testare manuala | Finalizata |
 | Teste unitare | Finalizate |
 | Jenkinsfile | Configurat |
+| Pipeline Jenkins | Build, Calitate Cod, Testare si Deploy |
 | Testare Jenkins | SUCCESS |
 | Dockerfile | Creat |
 | Imagine Docker | Creata |
@@ -447,19 +452,27 @@ Acesta include:
 | Aplicatie accesibila din container | Verificat |
 | README.md | Actualizat |
 | Screenshot-uri | Adaugate |
-| Pull Request | Urmeaza / in asteptare review |
-| Review la coleg | Urmeaza |
+| Pull Request propriu | PR #2 - merged |
+| Review primit | Realizat si aprobat |
+| Review la coleg | PR #15 - realizat si aprobat |
+| Integrare in `main_Szabo_Daria` | Finalizata |
 
 ---
 
 <a id="ce-mai-este-de-facut"></a>
 ## 16. Ce mai este de facut
 
-Pentru finalizarea completa a proiectului mai trebuie:
+Functionalitatea pentru Orasul Paris este finalizata.
 
-- crearea Pull Request-ului din `dev_Szabo_Daria` in `main_Szabo_Daria`;
-- obtinerea unui review de la un coleg;
-- realizarea unui review la Pull Request-ul unui coleg;
-- actualizarea README-ului cu ID-ul PR-ului propriu;
-- actualizarea README-ului cu ID-ul PR-ului la care am facut review;
-- integrarea modificarilor dupa aprobare.
+Au fost realizate:
+- implementarea functionalitatii pentru Paris;
+- testarea manuala in browser;
+- testarea unitara locala;
+- configurarea si rularea Jenkins;
+- containerizarea cu Docker;
+- documentarea in README.md;
+- integrarea modificarilor prin Pull Request;
+- review-ul primit pentru Pull Request-ul propriu;
+- review-ul realizat la Pull Request-ul unui coleg.
+
+Nu mai sunt pasi tehnici obligatorii pentru functionalitatea proprie, in afara de eventuale actualizari cerute de coordonator sau rezolvarea unor conflicte aparute ulterior la integrarea in branch-ul principal al grupei.
